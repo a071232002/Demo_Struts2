@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import org.springframework.stereotype.Component;
 
 @Entity
-@Table(name ="mem")
+@Table(name ="user")
 @Component
 public class User {
 	@Id

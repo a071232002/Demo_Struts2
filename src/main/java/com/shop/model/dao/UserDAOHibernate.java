@@ -62,8 +62,12 @@ public class UserDAOHibernate implements UserDAO {
 		Session session = sessionFactory.getCurrentSession();
 
 		try {
-
-			return session.get(User.class, userMail);
+			
+			User user = (User) session.createQuery("from User where userMail =:userMail")
+							   		  .setParameter("userMail", userMail)
+							   		  .uniqueResult();
+			
+			return user;
 
 		} catch (Exception e) {
 			e.printStackTrace();

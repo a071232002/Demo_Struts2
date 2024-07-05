@@ -3,7 +3,7 @@ DROP DATABASE IF EXISTS demo1;
 CREATE DATABASE IF NOT EXISTS demo1;
 USE demo1;
 
-CREATE TABLE mem (
+CREATE TABLE user (
     userNo		 INT PRIMARY KEY AUTO_INCREMENT,
     userMail 	 varchar(255) UNIQUE, --  NOT NULL,
     userName 	 VARCHAR(255), --  NOT NULL,

@@ -7,9 +7,6 @@
     <constant name="struts.objectFactory" value="spring" />
 	
 	<package name="user" namespace="/user" extends="struts-default">
-		<action name="home">
-			<result>/</result>
-		</action>
 		<action name="login">
 			<result>login.jsp</result>
 		</action>
