@@ -1,8 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+
+
 <html>
 <head>
+ <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+ 
 <title>shop</title>
+
 </head>
 <body>
 	<h1>shop</h1>
@@ -17,7 +22,41 @@
 		<a href="<%=request.getContextPath()%>/user/register">註冊</a>
 		<a href="<%=request.getContextPath()%>/user/login">登入</a>
 	</s:else>
+	
+	<!-- DataTables initialization -->
+    <table id="proTable">
+        <thead>
+            <tr>
+                <th>商品編號</th>
+                <th>商品名稱</th>
+                <th>商品價格</th>
+                <th>商品數量</th>
+            </tr>
+        </thead>
+        <tbody>
+            <s:iterator value="proList" var="pro">
+                <tr>
+                    <td><s:property value="#pro.proNo"/></td>
+                    <td><s:property value="#pro.proName"/></td>
+                    <td><s:property value="#pro.proPrice"/></td>
+                    <td><s:property value="#pro.proQty"/></td>
+                </tr>
+            </s:iterator>
+        </tbody>
+    </table>
 
+    
+    <!-- jQuery -->
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    
+    
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#proTable').DataTable();
+        });
+    </script>
 </body>
 
 </html>
