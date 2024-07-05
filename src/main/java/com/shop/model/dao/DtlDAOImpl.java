@@ -1,0 +1,60 @@
+package com.shop.model.dao;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.transaction.Transactional;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Component;
+
+import com.shop.model.entity.Dtl;
+
+@Component("dtlDAO")
+@Transactional
+public class DtlDAOImpl implements DtlDAO {
+
+	private SessionFactory sessionFactory;
+
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	@Resource(name = "sessionFactory")
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	@Override
+	public int insert(List<Dtl> dtlList) {
+		Session session = sessionFactory.getCurrentSession();
+
+		try {
+			for (Dtl dtl : dtlList) {
+				session.save(dtl);
+			}
+			return 1;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	@Override
+	public List<Dtl> findByOrdNo(int ordNo) {
+		Session session = sessionFactory.getCurrentSession();
+
+		try {
+
+			List<Dtl> list = session.createQuery("from dtl where ordNo = :ordNo", Dtl.class)
+					.setParameter("ordNo", ordNo).list();
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+}

@@ -1,0 +1,33 @@
+DROP DATABASE IF EXISTS demo1;
+
+CREATE DATABASE IF NOT EXISTS demo1;
+USE demo1;
+
+CREATE TABLE mem (
+    userNo		 INT PRIMARY KEY AUTO_INCREMENT,
+    userMail 	 varchar(255) UNIQUE, --  NOT NULL,
+    userName 	 VARCHAR(255), --  NOT NULL,
+    userPsw 	 VARCHAR(255) --  NOT NULL,
+);
+
+CREATE TABLE pro (
+    proNo 		INT PRIMARY KEY AUTO_INCREMENT,
+    proName 	VARCHAR(255), --  NOT NULL,
+    proPrice 	INT, --  NOT NULL,
+    proQty 		INT
+);
+
+CREATE TABLE ord (
+    ordNo 		INT PRIMARY KEY AUTO_INCREMENT,
+    userNo 		INT, --  NOT NULL,
+    ordPrice 	INT,
+    ordSt 		TINYINT DEFAULT 0
+);
+
+CREATE TABLE dtl (
+	dtlNo  		INT PRIMARY KEY AUTO_INCREMENT,
+    userNo 		INT, --  NOT NULL,
+    proNo  		INT, --  NOT NULL,
+    dtlQty 		INT,
+    dtlPrice 	INT
+);
