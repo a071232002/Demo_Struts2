@@ -47,7 +47,7 @@ public class ProDAOImpl implements ProDAO {
 		Session session = sessionFactory.getCurrentSession();
 		List<Pro> list = new ArrayList<Pro>();
 		try {
-			list = session.createQuery("from pro", Pro.class).list();
+			list = session.createQuery("from Pro", Pro.class).list();
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();

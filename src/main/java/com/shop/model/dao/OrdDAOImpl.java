@@ -21,7 +21,7 @@ public class OrdDAOImpl implements OrdDAO {
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
-
+	
 	@Resource(name = "sessionFactory")
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -46,7 +46,7 @@ public class OrdDAOImpl implements OrdDAO {
 		Session session = sessionFactory.getCurrentSession();
 		List<Ord> list = new ArrayList<Ord>();
 		try {
-			list = session.createQuery("from ord", Ord.class).list();
+			list = session.createQuery("from Ord", Ord.class).list();
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();

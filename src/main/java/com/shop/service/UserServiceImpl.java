@@ -1,6 +1,5 @@
 package com.shop.service;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.shop.model.dao.UserDAO;
 import com.shop.model.entity.User;
 
-@Component("userService")
+@Component
 public class UserServiceImpl implements UserService {
 	
 	@Autowired

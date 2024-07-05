@@ -48,7 +48,7 @@ public class DtlDAOImpl implements DtlDAO {
 
 		try {
 
-			List<Dtl> list = session.createQuery("from dtl where ordNo = :ordNo", Dtl.class)
+			List<Dtl> list = session.createQuery("from Dtl where ordNo = :ordNo", Dtl.class)
 					.setParameter("ordNo", ordNo).list();
 			return list;
 		} catch (Exception e) {

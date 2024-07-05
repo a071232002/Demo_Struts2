@@ -2,10 +2,10 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <html>
 <head>
-<title>首頁</title>
+<title>shop</title>
 </head>
 <body>
-	<h1>Index</h1>
+	<h1>shop</h1>
 	<a href="<%=request.getContextPath()%>/">首頁</a>
 	<a href="<%=request.getContextPath()%>/shop/index">商城</a>
 	<s:if test="#session.user != null">

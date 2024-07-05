@@ -17,6 +17,11 @@ CREATE TABLE pro (
     proQty 		INT
 );
 
+INSERT INTO pro (proName, proPrice, proQty) VALUES 
+				('demo1', 100, 10),
+				('demo2', 1000, 5),
+				('demo3', 50, 30);
+
 CREATE TABLE ord (
     ordNo 		INT PRIMARY KEY AUTO_INCREMENT,
     userNo 		INT, --  NOT NULL,

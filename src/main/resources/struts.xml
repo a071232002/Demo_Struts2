@@ -7,11 +7,18 @@
     <constant name="struts.objectFactory" value="spring" />
 	
 	<package name="user" namespace="/user" extends="struts-default">
+		<action name="register">
+			<result>register.jsp</result>
+		</action>
+		<action name="add" class="com.shop.action.UserAction" method="register">
+			<result name="success">welcome.jsp</result>
+		</action>
 		<action name="login">
 			<result>login.jsp</result>
 		</action>
-		<action name="register">
-			<result>register.jsp</result>
+		<action name="welcome" class="com.shop.action.UserAction" method="login">
+			<result name="success">welcome.jsp</result>
+			<result name="error" type="redirect">login.jsp</result>			
 		</action>
 		<action name="memCenter">
 			<result name="success">welcome.jsp</result>			
@@ -19,18 +26,17 @@
 		<action name="edit">
 			<result>update.jsp</result>
 		</action>
-		<action name="add" class="com.shop.action.UserAction" method="register">
-			<result name="success">welcome.jsp</result>
-		</action>
-		<action name="welcome" class="com.shop.action.UserAction" method="login">
-			<result name="success">welcome.jsp</result>
-			<result name="error" type="redirect">login.jsp</result>			
-		</action>
 		<action name="update" class="com.shop.action.UserAction" method="update">
 			<result name="success">welcome.jsp</result>
 		</action>
 		<action name="logout" class="com.shop.action.UserAction" method="logout">
 			<result type="redirect">/</result>
+		</action>
+	</package>
+	
+	<package name="shop" namespace="/shop" extends="struts-default">
+		<action name="index" class="com.shop.action.ShopAction" method="getAll">
+			<result>shop.jsp</result>
 		</action>
 	</package>
 </struts>

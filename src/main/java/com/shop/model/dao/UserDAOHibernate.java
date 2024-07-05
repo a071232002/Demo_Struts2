@@ -9,10 +9,9 @@ import org.springframework.stereotype.Component;
 
 import com.shop.model.entity.User;
 
-@Component("userDAO")
+@Component
 public class UserDAOHibernate implements UserDAO {
 
-//	private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -66,7 +65,6 @@ public class UserDAOHibernate implements UserDAO {
 			User user = (User) session.createQuery("from User where userMail =:userMail")
 							   		  .setParameter("userMail", userMail)
 							   		  .uniqueResult();
-			
 			return user;
 
 		} catch (Exception e) {

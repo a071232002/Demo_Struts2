@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -13,23 +14,23 @@ import com.shop.service.UserService;
 
 @Component
 public class UserAction extends ActionSupport implements SessionAware {
-
 	private int userNo;
 	private String userMail;
 	private String userName;
 	private String userPsw;
 	private Map<String, Object> session;
+	
+	@Autowired
+	private UserService userSvc;
 
-	private UserService userSvc;		
-	
-	public UserService getUserSvc() {
-		return userSvc;
-	}
-	
-	@Resource(name="userService")
-	public void setUserSvc(UserService userSvc) {
-		this.userSvc = userSvc;
-	}
+//	public UserService getUserSvc() {
+//		return userSvc;
+//	}
+//
+//	@Resource(name = "userService")
+//	public void setUserSvc(UserService userSvc) {
+//		this.userSvc = userSvc;
+//	}
 
 	public String register() {
 		User user = new User();
