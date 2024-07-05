@@ -1,4 +1,4 @@
-package com.shop.model.dao;
+package com.shop.model.dao.impl;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
 
+import com.shop.model.dao.DtlDAO;
 import com.shop.model.entity.Dtl;
 
 @Component("dtlDAO")

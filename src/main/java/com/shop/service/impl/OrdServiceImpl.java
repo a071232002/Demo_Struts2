@@ -1,4 +1,4 @@
-package com.shop.service;
+package com.shop.service.impl;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.shop.model.dao.OrdDAO;
 import com.shop.model.entity.Ord;
+import com.shop.service.OrdService;
 
 @Component("ordService")
 public class OrdServiceImpl implements OrdService {

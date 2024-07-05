@@ -1,4 +1,4 @@
-package com.shop.service;
+package com.shop.service.impl;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.shop.model.dao.ProDAO;
 import com.shop.model.entity.Pro;
+import com.shop.service.ProService;
 
 @Component("proService")
 public class ProServiceImpl implements ProService{

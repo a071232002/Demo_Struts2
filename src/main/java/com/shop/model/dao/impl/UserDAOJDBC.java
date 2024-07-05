@@ -1,4 +1,4 @@
-package com.shop.model.dao;
+package com.shop.model.dao.impl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,4 +1,4 @@
-package com.shop.service;
+package com.shop.service.impl;
 
 import javax.transaction.Transactional;
 
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.shop.model.dao.UserDAO;
 import com.shop.model.entity.User;
+import com.shop.service.UserService;
 
 @Component
 public class UserServiceImpl implements UserService {

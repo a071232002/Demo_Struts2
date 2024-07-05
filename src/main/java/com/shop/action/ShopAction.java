@@ -16,6 +16,10 @@ import com.shop.service.ProService;
 public class ShopAction extends ActionSupport implements SessionAware {
 	
 	private List<Pro> proList;
+	private Integer proNo;
+	private String proName;
+	private Integer proPrice;
+	private Integer proQty;
 	
 	private Map<String, Object> session;
 	
@@ -29,11 +33,43 @@ public class ShopAction extends ActionSupport implements SessionAware {
 		this.session = session;
 
 	}
-	
+
 	public String getAll() {
 		proList = proSvc.getAll();	
 		System.out.println(proList);
 		return "success";
+	}
+
+	public Integer getProNo() {
+		return proNo;
+	}
+
+	public void setProNo(Integer proNo) {
+		this.proNo = proNo;
+	}
+
+	public String getProName() {
+		return proName;
+	}
+
+	public void setProName(String proName) {
+		this.proName = proName;
+	}
+
+	public Integer getProPrice() {
+		return proPrice;
+	}
+
+	public void setProPrice(Integer proPrice) {
+		this.proPrice = proPrice;
+	}
+
+	public Integer getProQty() {
+		return proQty;
+	}
+
+	public void setProQty(Integer proQty) {
+		this.proQty = proQty;
 	}
 	
 	

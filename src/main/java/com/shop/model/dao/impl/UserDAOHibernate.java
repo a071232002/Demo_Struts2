@@ -1,4 +1,4 @@
-package com.shop.model.dao;
+package com.shop.model.dao.impl;
 
 import javax.transaction.Transactional;
 
@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.shop.model.dao.UserDAO;
 import com.shop.model.entity.User;
 
 @Component

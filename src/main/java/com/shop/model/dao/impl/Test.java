@@ -1,4 +1,4 @@
-package com.shop.model.dao;
+package com.shop.model.dao.impl;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -10,9 +10,6 @@ public class Test {
 		String[] s = context.getBeanDefinitionNames();
 		for (String name : s) {
 			System.out.println(name);
-		}
-		
-		
-		
+		}	
 	}
 }
