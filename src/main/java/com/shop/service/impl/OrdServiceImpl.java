@@ -2,13 +2,13 @@ package com.shop.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.springframework.stereotype.Component;
 
 import com.shop.model.dao.OrdDAO;
 import com.shop.model.entity.Ord;
 import com.shop.service.OrdService;
+
+import jakarta.annotation.Resource;
 
 @Component("ordService")
 public class OrdServiceImpl implements OrdService {

@@ -17,7 +17,7 @@
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
         <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/demo1"/>
         <property name="username" value="root"/>
-        <property name="password" value="1234"/>
+        <property name="password" value="Qwer454898"/>
         <property name="maximumPoolSize" value="10"/>
     </bean>
 

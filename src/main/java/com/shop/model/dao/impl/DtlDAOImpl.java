@@ -2,7 +2,6 @@ package com.shop.model.dao.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -11,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import com.shop.model.dao.DtlDAO;
 import com.shop.model.entity.Dtl;
+
+import jakarta.annotation.Resource;
 
 @Component("dtlDAO")
 @Transactional

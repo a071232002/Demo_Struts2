@@ -3,11 +3,11 @@ package com.shop.model.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.shop.model.dao.ProDAO;
@@ -16,17 +16,18 @@ import com.shop.model.entity.Pro;
 @Component("proDAO")
 @Transactional
 public class ProDAOImpl implements ProDAO {
-
+	
+	@Autowired
 	private SessionFactory sessionFactory;
 
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
-
-	@Resource(name = "sessionFactory")
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
+//	public SessionFactory getSessionFactory() {
+//		return sessionFactory;
+//	}
+//
+//	@Resource(name = "sessionFactory")
+//	public void setSessionFactory(SessionFactory sessionFactory) {
+//		this.sessionFactory = sessionFactory;
+//	}
 
 	@Override
 	public int insert(Pro pro) {

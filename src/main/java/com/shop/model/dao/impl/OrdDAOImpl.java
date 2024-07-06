@@ -3,7 +3,6 @@ package com.shop.model.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -12,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import com.shop.model.dao.OrdDAO;
 import com.shop.model.entity.Ord;
+
+import jakarta.annotation.Resource;
 
 @Component("ordDAO")
 @Transactional

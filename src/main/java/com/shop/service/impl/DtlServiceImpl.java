@@ -2,13 +2,13 @@ package com.shop.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.springframework.stereotype.Component;
 
 import com.shop.model.dao.DtlDAO;
 import com.shop.model.entity.Dtl;
 import com.shop.service.DtlService;
+
+import jakarta.annotation.Resource;
 
 @Component("dtlService")
 public class DtlServiceImpl implements DtlService {

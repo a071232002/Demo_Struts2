@@ -34,18 +34,17 @@
             </tr>
         </thead>
         <tbody>
-            <s:iterator value="proList" var="pro">
+            <s:iterator value="proList" var="Pro">
                 <tr>
-                    <td><s:property value="#pro.proNo"/></td>
-                    <td><s:property value="#pro.proName"/></td>
-                    <td><s:property value="#pro.proPrice"/></td>
-                    <td><s:property value="#pro.proQty"/></td>
+                    <td><s:property value="#Pro.proNo"/></td>
+                    <td><s:property value="#Pro.proName"/></td>
+                    <td><s:property value="#Pro.proPrice"/></td>
+                    <td><s:property value="#Pro.proQty"/></td>
                 </tr>
             </s:iterator>
         </tbody>
     </table>
-
-    
+	
     <!-- jQuery -->
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- DataTables JS -->

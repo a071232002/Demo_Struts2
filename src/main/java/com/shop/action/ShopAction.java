@@ -3,19 +3,19 @@ package com.shop.action;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.shop.model.entity.Pro;
+import com.shop.model.dto.ProDTO;
 import com.shop.service.ProService;
 
 @Component
 public class ShopAction extends ActionSupport implements SessionAware {
 	
-	private List<Pro> proList;
+//	private List<Pro> proList;
+	private List<ProDTO> proList;
 	private Integer proNo;
 	private String proName;
 	private Integer proPrice;
@@ -24,7 +24,7 @@ public class ShopAction extends ActionSupport implements SessionAware {
 	private Map<String, Object> session;
 	
 	
-	@Resource(name="proService")
+	@Autowired
 	private ProService proSvc;
 	
 	
@@ -35,9 +35,20 @@ public class ShopAction extends ActionSupport implements SessionAware {
 	}
 
 	public String getAll() {
-		proList = proSvc.getAll();	
-		System.out.println(proList);
+//		proList = proSvc.getAll();
+		proList = proSvc.getDTOAll();	
+		System.out.println(proList);	
 		return "success";
+	}
+	
+	
+
+	public List<ProDTO> getProList() {
+		return proList;
+	}
+
+	public void setProList(List<ProDTO> proList) {
+		this.proList = proList;
 	}
 
 	public Integer getProNo() {

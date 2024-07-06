@@ -2,8 +2,6 @@ package com.shop.action;
 
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
