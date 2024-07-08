@@ -87,21 +87,21 @@ public class CartAction extends ActionSupport implements SessionAware {
 	public String remove() {
 		return "success";
 	}
-
-	@Transactional
-	public String confirmOrder() {
-		Ord ord = new Ord();
-		ord.setUser((User) session.get("user"));
-		ord.setOrdPrice(orderAmount());
-		int ordID = ordScv.add(ord);
-
-		int result = dtlScv.add(convertToDtl(ordScv.findByOrdNo(ordID)));
-
-		if (result == 1) {
-			System.out.println("成功");
-		}
-		return "success";
-	}
+//
+//	@Transactional
+//	public String confirmOrder() {
+//		Ord ord = new Ord();
+//		ord.setUser((User) session.get("user"));
+//		ord.setOrdPrice(orderAmount());
+//		int ordID = ordScv.add(ord);
+//
+//		int result = dtlScv.add(convertToDtl(ordScv.findByOrdNo(ordID)));
+//
+//		if (result == 1) {
+//			System.out.println("成功");
+//		}
+//		return "success";
+//	}
 
 	public Integer getUserNo() {
 		return userNo;
@@ -169,7 +169,7 @@ public class CartAction extends ActionSupport implements SessionAware {
 			dtlList = cartList.stream().map(item -> {
 											User user = (User) session.get("user");
 											Pro pro = proSvc.findByProNo(item.getProNo());
-											return new Dtl(ord, user, pro, item.getOrdQty(), item.getOrdPrice());
+											return new Dtl(ord, pro, item.getOrdQty(), item.getOrdPrice());
 									 }).collect(Collectors.toList());
 		}
 		return dtlList;

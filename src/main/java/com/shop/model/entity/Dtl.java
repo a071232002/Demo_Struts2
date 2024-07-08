@@ -26,11 +26,6 @@ public class Dtl {
 	@JoinColumn(name = "ordNo", referencedColumnName = "ordNo")
 	private Ord ord;
 	
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userNo", referencedColumnName = "userNo")
-	private User user;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "proNo", referencedColumnName = "proNo")
 	private Pro pro;
@@ -46,10 +41,9 @@ public class Dtl {
 
 	}
 
-	public Dtl(Ord ord, User user, Pro pro, Integer dtlQty, Integer dtlPrice) {
+	public Dtl(Ord ord, Pro pro, Integer dtlQty, Integer dtlPrice) {
 		super();
 		this.ord = ord;
-		this.user = user;
 		this.pro = pro;
 		this.dtlQty = dtlQty;
 		this.dtlPrice = dtlPrice;
@@ -69,14 +63,6 @@ public class Dtl {
 
 	public void setOrd(Ord ord) {
 		this.ord = ord;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public Pro getPro() {
@@ -105,8 +91,8 @@ public class Dtl {
 
 	@Override
 	public String toString() {
-		return "Dtl [dtlNo=" + dtlNo + ", user=" + user + ", pro=" + pro + ", dtlQty=" + dtlQty + ", dtlPrice="
-				+ dtlPrice + "]";
+		return "Dtl [dtlNo=" + dtlNo + ", ord=" + ord + ", pro=" + pro + ", dtlQty=" + dtlQty + ", dtlPrice=" + dtlPrice
+				+ "]";
 	}
 
 }

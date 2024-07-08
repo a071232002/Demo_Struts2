@@ -9,7 +9,9 @@ CREATE TABLE user (
     userName 	 VARCHAR(255), --  NOT NULL,
     userPsw 	 VARCHAR(255) --  NOT NULL,
 );
-
+INSERT INTO user (userMail, userName, userPsw) VALUES 
+				('1', '1', '1');
+				
 CREATE TABLE pro (
     proNo 		INT PRIMARY KEY AUTO_INCREMENT,
     proName 	VARCHAR(255), --  NOT NULL,
