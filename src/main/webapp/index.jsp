@@ -3,21 +3,13 @@
 <html>
 <head>
 <title>首頁</title>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/navi.css">
 </head>
 <body>
 	<h1>Index</h1>
-	<a href="<%=request.getContextPath()%>/">首頁</a>
-	<a href="<%=request.getContextPath()%>/shop/index">商城</a>
-	<s:if test="#session.user != null">
-		<h4 style="display: inline; margin-right:30px;">Hello, <s:property value="#session.user.userName"/></h4>
-		<a href="<%=request.getContextPath()%>/user/memCenter">會員中心</a>
-		<a href="<%=request.getContextPath()%>/user/logout">登出</a>
-	</s:if>
-	<s:else>
-		<a href="<%=request.getContextPath()%>/user/register">註冊</a>
-		<a href="<%=request.getContextPath()%>/user/login">登入</a>
-	</s:else>
-
+	<%@ include file="/util/navi.jsp" %>
+	<main>
+	</main>
 </body>
 
 </html>

@@ -1,21 +1,66 @@
 package com.shop.action;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.shop.model.dto.CartDTO;
+import com.shop.service.DtlService;
+import com.shop.service.OrdService;
+import com.shop.service.ProService;
 
+import javassist.expr.NewArray;
+
+@Component
 public class CartAction extends ActionSupport implements SessionAware {
 
-	private Integer proNo;
 	private Integer userNo;
-	private Integer dtlQty;
-	private Integer dtlPrice;
-
+	private Integer proNo;
+	private String proName;
+	private Integer proQty;
+	private Integer proPrice;
+	
+	private List<CartDTO> cartList = new ArrayList<CartDTO>();
+	
 	Map<String, Object> session;
 
+	@Autowired
+	OrdService ordScv;
+	
+	@Autowired
+	ProService proSvc;
+	
+	@Autowired
+	DtlService dtlScv;
+
+	public List<CartDTO> getCartList() {
+		return cartList;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void setCartList() {
+		this.cartList = (List<CartDTO>) session.getOrDefault("cart", cartList);
+	}
+
 	public String add() {
+		CartDTO cartDTO = new CartDTO(proNo, proName, proQty, proPrice);
+		setCartList();
+		cartList.add(cartDTO);
+		session.put("cart", cartList);
+		System.out.println("hi, 這是cart add");
+		return "success";
+	}
+
+	@SuppressWarnings("unchecked")
+	public String query() {
+		cartList = (List<CartDTO>) session.get("cart");
+		System.out.println(cartList);
+		System.out.println("hi, 這是cart query");
 		return "success";
 	}
 
@@ -27,8 +72,12 @@ public class CartAction extends ActionSupport implements SessionAware {
 		return "success";
 	}
 
-	public String order() {
-		return "success";
+	public Integer getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(Integer userNo) {
+		this.userNo = userNo;
 	}
 
 	public Integer getProNo() {
@@ -39,28 +88,28 @@ public class CartAction extends ActionSupport implements SessionAware {
 		this.proNo = proNo;
 	}
 
-	public Integer getUserNo() {
-		return userNo;
+	public String getProName() {
+		return proName;
 	}
 
-	public void setUserNo(Integer userNo) {
-		this.userNo = userNo;
+	public void setProName(String proName) {
+		this.proName = proName;
 	}
 
-	public Integer getDtlQty() {
-		return dtlQty;
+	public Integer getProQty() {
+		return proQty;
 	}
 
-	public void setDtlQty(Integer dtlQty) {
-		this.dtlQty = dtlQty;
+	public void setProQty(Integer proQty) {
+		this.proQty = proQty;
 	}
 
-	public Integer getDtlPrice() {
-		return dtlPrice;
+	public Integer getProPrice() {
+		return proPrice;
 	}
 
-	public void setDtlPrice(Integer dtlPrice) {
-		this.dtlPrice = dtlPrice;
+	public void setProPrice(Integer proPrice) {
+		this.proPrice = proPrice;
 	}
 
 	@Override
@@ -69,11 +118,4 @@ public class CartAction extends ActionSupport implements SessionAware {
 
 	}
 
-	@Override
-	public String toString() {
-		return "CartAction [proNo=" + proNo + ", userNo=" + userNo + ", dtlQty=" + dtlQty + ", dtlPrice=" + dtlPrice
-				+ ", session=" + session + "]";
-	}
-	
-	
 }

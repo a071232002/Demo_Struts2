@@ -11,6 +11,8 @@ public interface ProService {
 	
 	public int update(Pro pro);
 	
+	public Pro findByProNo(int proNo);
+	
 	public List<Pro> getAll();
 	
 	public List<ProDTO> getDTOAll();

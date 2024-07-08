@@ -8,14 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.shop.model.dto.ProDTO;
+import com.shop.model.entity.Pro;
+import com.shop.model.entity.User;
 import com.shop.service.ProService;
 
 @Component
 public class ShopAction extends ActionSupport implements SessionAware {
 	
-//	private List<Pro> proList;
-	private List<ProDTO> proList;
+	private List<Pro> proList;
+//	private List<ProDTO> proList;
 	private Integer proNo;
 	private String proName;
 	private Integer proPrice;
@@ -35,21 +36,30 @@ public class ShopAction extends ActionSupport implements SessionAware {
 	}
 
 	public String getAll() {
-//		proList = proSvc.getAll();
-		proList = proSvc.getDTOAll();	
+		User user = (User) session.get("user");
+		if(user == null) {
+			return "returnLogin";
+		}
+		proList = proSvc.getAll();
+//		proList = proSvc.getDTOAll();	
 		System.out.println(proList);	
 		return "success";
 	}
 	
 	
 
-	public List<ProDTO> getProList() {
+	public void setProList(List<Pro> proList) {
+		this.proList = proList;
+	}
+
+//	public void setProList(List<ProDTO> proList) {
+//		this.proList = proList;
+//	}
+	
+	public List<Pro> getProList() {
 		return proList;
 	}
 
-	public void setProList(List<ProDTO> proList) {
-		this.proList = proList;
-	}
 
 	public Integer getProNo() {
 		return proNo;

@@ -4,47 +4,50 @@
 
 <html>
 <head>
- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
- 
 <title>shop</title>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/navi.css"> 
 
 </head>
 <body>
-	<h1>shop</h1>
-	<a href="<%=request.getContextPath()%>/">首頁</a>
-	<a href="<%=request.getContextPath()%>/shop/index">商城</a>
-	<s:if test="#session.user != null">
-		<h4 style="display: inline; margin-right:30px;">Hello, <s:property value="#session.user.userName"/></h4>
-		<a href="<%=request.getContextPath()%>/user/memCenter">會員中心</a>
-		<a href="<%=request.getContextPath()%>/user/logout">登出</a>
-	</s:if>
-	<s:else>
-		<a href="<%=request.getContextPath()%>/user/register">註冊</a>
-		<a href="<%=request.getContextPath()%>/user/login">登入</a>
-	</s:else>
-	
+	<h1>Shop</h1>
+	<%@ include file="/util/navi.jsp" %>
+	<main>
 	<!-- DataTables initialization -->
-    <table id="proTable">
+    <table id="proTable" class="shopTable">
         <thead>
             <tr>
                 <th>商品編號</th>
                 <th>商品名稱</th>
                 <th>商品價格</th>
-                <th>商品數量</th>
+                <th>選購項目</th>
             </tr>
         </thead>
         <tbody>
-            <s:iterator value="proList" var="Pro">
-                <tr>
-                    <td><s:property value="#Pro.proNo"/></td>
-                    <td><s:property value="#Pro.proName"/></td>
-                    <td><s:property value="#Pro.proPrice"/></td>
-                    <td><s:property value="#Pro.proQty"/></td>
-                </tr>
+            <s:iterator value="proList" var="pro">
+		            <tr>
+                 		<form action="<%=request.getContextPath()%>/cart/add" >
+							<td><s:property value="#pro.proNo" /></td>
+							<td><s:property value="#pro.proName" /></td>
+							<td><s:property value="#pro.proPrice" /></td>
+							<td>
+								<label>請選擇數量</label> 
+								<select name="proQty">
+									<s:iterator begin="1" end="%{#pro.proQty}" var="i">
+										<option value="<s:property value="#i"/>"><s:property value="#i" /></option>
+									</s:iterator>
+								</select> 
+								<input type="hidden" name="proNo" value="<s:property value="#pro.proNo"/>" />
+								<input type="hidden" name="proName" value="<s:property value="#pro.proName"/>" />
+								<input type="hidden" name="proPrice" value="<s:property value="#pro.proPrice"/>" />
+								<input type="submit" value="加入購物車" />
+							</td>
+                  		</form>
+					</tr>
             </s:iterator>
         </tbody>
     </table>
-	
+	</main>
     <!-- jQuery -->
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- DataTables JS -->

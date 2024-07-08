@@ -10,6 +10,8 @@ public interface ProDAO {
 	
 	public List<Pro> getAll();
 	
+	public Pro findByProNo(int proNo);
+	
 	public int update(Pro pro);
 	
 }

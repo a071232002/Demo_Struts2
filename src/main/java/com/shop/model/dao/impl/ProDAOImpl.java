@@ -16,7 +16,7 @@ import com.shop.model.entity.Pro;
 @Component("proDAO")
 @Transactional
 public class ProDAOImpl implements ProDAO {
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -45,6 +45,18 @@ public class ProDAOImpl implements ProDAO {
 	}
 
 	@Override
+	public Pro findByProNo(int proNo) {
+		Session session = sessionFactory.getCurrentSession();
+		Pro pro = null;
+		try {
+			pro = session.get(Pro.class, proNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pro;
+	}
+
+	@Override
 	public List<Pro> getAll() {
 		Session session = sessionFactory.getCurrentSession();
 		List<Pro> list = new ArrayList<Pro>();
@@ -64,7 +76,7 @@ public class ProDAOImpl implements ProDAO {
 		try {
 			session.update(pro);
 			return 1;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;

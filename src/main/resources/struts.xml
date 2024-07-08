@@ -37,6 +37,20 @@
 	<package name="shop" namespace="/shop" extends="struts-default">
 		<action name="index" class="com.shop.action.ShopAction" method="getAll">
 			<result>shop.jsp</result>
+			<result name="returnLogin" type="redirect">/user/login.jsp</result>
 		</action>
 	</package>
+	
+	<package name="cart" namespace="/cart" extends="struts-default">
+		<action name="query" class="com.shop.action.CartAction" method="query">
+			<result>/</result>
+		</action>
+		<action name="add" class="com.shop.action.CartAction" method="add">
+			<result name="success" type="redirectAction">
+                <param name="namespace">/shop</param>
+                <param name="actionName">index</param>
+            </result>
+		</action>
+	</package>
+	
 </struts>

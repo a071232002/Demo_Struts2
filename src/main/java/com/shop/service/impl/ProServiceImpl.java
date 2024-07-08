@@ -37,6 +37,11 @@ public class ProServiceImpl implements ProService {
 	}
 
 	@Override
+	public Pro findByProNo(int proNo) {
+		return proDAO.findByProNo(proNo);
+	}
+
+	@Override
 	public List<Pro> getAll() {
 		return proDAO.getAll();
 	}
