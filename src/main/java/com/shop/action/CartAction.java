@@ -3,6 +3,9 @@ package com.shop.action;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,9 @@ import org.springframework.stereotype.Component;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.shop.model.dto.CartDTO;
+import com.shop.model.entity.Dtl;
+import com.shop.model.entity.Ord;
+import com.shop.model.entity.Pro;
 import com.shop.model.entity.User;
 import com.shop.service.DtlService;
 import com.shop.service.OrdService;
@@ -53,7 +59,7 @@ public class CartAction extends ActionSupport implements SessionAware {
 				if (cartDTO.getProNo() == proNo) {
 					cartDTO.setOrdQty(cartDTO.getOrdQty() + proQty);
 					return "success";
-				} 
+				}
 			}
 		}
 		System.out.println("add new item");
@@ -66,7 +72,7 @@ public class CartAction extends ActionSupport implements SessionAware {
 	@SuppressWarnings("unchecked")
 	public String query() {
 		User user = (User) session.get("user");
-		if(user == null) {
+		if (user == null) {
 			return "returnLogin";
 		}
 		cartList = (List<CartDTO>) session.get("cart");
@@ -81,11 +87,22 @@ public class CartAction extends ActionSupport implements SessionAware {
 	public String remove() {
 		return "success";
 	}
-	
+
+	@Transactional
 	public String confirmOrder() {
+		Ord ord = new Ord();
+		ord.setUser((User) session.get("user"));
+		ord.setOrdPrice(orderAmount());
+		int ordID = ordScv.add(ord);
+
+		int result = dtlScv.add(convertToDtl(ordScv.findByOrdNo(ordID)));
+
+		if (result == 1) {
+			System.out.println("成功");
+		}
 		return "success";
 	}
-	
+
 	public Integer getUserNo() {
 		return userNo;
 	}
@@ -129,6 +146,33 @@ public class CartAction extends ActionSupport implements SessionAware {
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
+	}
+
+	public int orderAmount() {
+		int count = 0;
+		setCartList();
+		if (cartList != null) {
+			for (CartDTO cartDTO : cartList) {
+				int qty = cartDTO.getOrdQty();
+				int price = cartDTO.getOrdPrice();
+				int itemTotal = qty * price;
+				count += itemTotal;
+			}
+		}
+		return count;
+	}
+
+	public List<Dtl> convertToDtl(Ord ord) {
+		List<Dtl> dtlList = new ArrayList<Dtl>();
+		setCartList();
+		if (cartList != null) {
+			dtlList = cartList.stream().map(item -> {
+											User user = (User) session.get("user");
+											Pro pro = proSvc.findByProNo(item.getProNo());
+											return new Dtl(ord, user, pro, item.getOrdQty(), item.getOrdPrice());
+									 }).collect(Collectors.toList());
+		}
+		return dtlList;
 	}
 
 }

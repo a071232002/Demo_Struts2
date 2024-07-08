@@ -36,6 +36,7 @@ INSERT INTO ord (userNo, ordPrice, ordst) VALUES
 
 CREATE TABLE dtl (
 	dtlNo  		INT PRIMARY KEY AUTO_INCREMENT,
+    ordNo 		INT, --  NOT NULL,
     userNo 		INT, --  NOT NULL,
     proNo  		INT, --  NOT NULL,
     dtlQty 		INT,

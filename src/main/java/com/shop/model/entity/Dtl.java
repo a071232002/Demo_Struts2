@@ -21,7 +21,12 @@ public class Dtl {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "dtlNo", updatable = false)
 	private Integer dtlNo;
-
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ordNo", referencedColumnName = "ordNo")
+	private Ord ord;
+	
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userNo", referencedColumnName = "userNo")
 	private User user;
@@ -35,6 +40,20 @@ public class Dtl {
 	
 	@Column(name = "dtlPrice")
 	private Integer dtlPrice;
+		
+	
+	public Dtl() {
+
+	}
+
+	public Dtl(Ord ord, User user, Pro pro, Integer dtlQty, Integer dtlPrice) {
+		super();
+		this.ord = ord;
+		this.user = user;
+		this.pro = pro;
+		this.dtlQty = dtlQty;
+		this.dtlPrice = dtlPrice;
+	}
 
 	public Integer getDtlNo() {
 		return dtlNo;
@@ -42,6 +61,14 @@ public class Dtl {
 
 	public void setDtlNo(Integer dtlNo) {
 		this.dtlNo = dtlNo;
+	}
+
+	public Ord getOrd() {
+		return ord;
+	}
+
+	public void setOrd(Ord ord) {
+		this.ord = ord;
 	}
 
 	public User getUser() {
