@@ -7,6 +7,10 @@
 <title>shop</title>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/navi.css"> 
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/dataTable.css">
+
+
+
 
 </head>
 <body>
@@ -40,7 +44,7 @@
 								<input type="hidden" name="proNo" value="<s:property value="#pro.proNo"/>" />
 								<input type="hidden" name="proName" value="<s:property value="#pro.proName"/>" />
 								<input type="hidden" name="proPrice" value="<s:property value="#pro.proPrice"/>" />
-								<input type="submit" value="加入購物車" />
+								<input type="submit" class="submit-button" value="加入購物車" />
 							</td>
                   		</form>
 					</tr>

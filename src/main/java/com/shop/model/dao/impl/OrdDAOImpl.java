@@ -7,27 +7,30 @@ import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.shop.model.dao.OrdDAO;
 import com.shop.model.entity.Ord;
+import com.shop.model.entity.User;
 
 import jakarta.annotation.Resource;
 
 @Component("ordDAO")
 @Transactional
 public class OrdDAOImpl implements OrdDAO {
-
+	
+	@Autowired
 	private SessionFactory sessionFactory;
 
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
-	
-	@Resource(name = "sessionFactory")
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
+//	public SessionFactory getSessionFactory() {
+//		return sessionFactory;
+//	}
+//
+//	@Resource(name = "sessionFactory")
+//	public void setSessionFactory(SessionFactory sessionFactory) {
+//		this.sessionFactory = sessionFactory;
+//	}
 
 	@Override
 	public int insert(Ord ord) {
@@ -41,6 +44,22 @@ public class OrdDAOImpl implements OrdDAO {
 			e.printStackTrace();
 			return -1;
 		}
+	}
+
+	@Override
+	public List<Ord> findByUser(int userNo) {
+		Session session = sessionFactory.getCurrentSession();
+		List<Ord> list = new ArrayList<Ord>();
+		try {
+			String hql = "FROM Ord o WHERE o.user.userNo = :user";
+			list = session.createQuery(hql, Ord.class)
+						  .setParameter("user", userNo)
+						  .getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
 	}
 
 	@Override

@@ -7,28 +7,36 @@
     <constant name="struts.objectFactory" value="spring" />
 	
 	<package name="user" namespace="/user" extends="struts-default">
+	
 		<action name="register">
 			<result>register.jsp</result>
 		</action>
+		
 		<action name="add" class="com.shop.action.UserAction" method="register">
 			<result name="success">welcome.jsp</result>
 		</action>
+		
 		<action name="login">
 			<result>login.jsp</result>
 		</action>
+
 		<action name="welcome" class="com.shop.action.UserAction" method="login">
 			<result name="success">welcome.jsp</result>
 			<result name="error" type="redirect">login.jsp</result>			
 		</action>
+		
 		<action name="memCenter">
 			<result name="success">welcome.jsp</result>			
 		</action>
+		
 		<action name="edit">
 			<result>update.jsp</result>
 		</action>
+		
 		<action name="update" class="com.shop.action.UserAction" method="update">
 			<result name="success">welcome.jsp</result>
 		</action>
+		
 		<action name="logout" class="com.shop.action.UserAction" method="logout">
 			<result type="redirect">/</result>
 		</action>
@@ -42,14 +50,29 @@
 	</package>
 	
 	<package name="cart" namespace="/cart" extends="struts-default">
+	
 		<action name="query" class="com.shop.action.CartAction" method="query">
-			<result>/</result>
+			<result>myCart.jsp</result>
+			<result name="returnLogin" type="redirect">/user/login.jsp</result>
 		</action>
+		
 		<action name="add" class="com.shop.action.CartAction" method="add">
 			<result name="success" type="redirectAction">
                 <param name="namespace">/shop</param>
                 <param name="actionName">index</param>
             </result>
+		</action>
+		
+		<action name="confirmOrder" class="com.shop.action.CartAction" method="confirmOrder">
+			<result name="success">/order/myOrder.jsp</result>
+		</action>
+		
+	</package>
+	
+	<package name="order" namespace="/order" extends="struts-default">
+		<action name="query" class="com.shop.action.OrdAction" method="query">
+			<result>myOrder.jsp</result>
+			<result name="returnLogin" type="redirect">/user/login.jsp</result>
 		</action>
 	</package>
 	

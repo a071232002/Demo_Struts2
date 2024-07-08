@@ -5,14 +5,14 @@ public class CartDTO {
 	private Integer proNo;
 	private String proName;
 	private Integer ordQty;
-	private Integer ordprice;
+	private Integer ordPrice;
 	
-	public CartDTO(Integer proNo, String proName, Integer ordQty, Integer ordprice) {
+	public CartDTO(Integer proNo, String proName, Integer ordQty, Integer ordPrice) {
 		super();
 		this.proNo = proNo;
 		this.proName = proName;
 		this.ordQty = ordQty;
-		this.ordprice = ordprice;
+		this.ordPrice = ordPrice;
 	}
 
 	public Integer getProNo() {
@@ -39,17 +39,17 @@ public class CartDTO {
 		this.ordQty = ordQty;
 	}
 
-	public Integer getOrdprice() {
-		return ordprice;
+	public Integer getOrdPrice() {
+		return ordPrice;
 	}
 
-	public void setOrdprice(Integer ordprice) {
-		this.ordprice = ordprice;
+	public void setOrdPrice(Integer ordprice) {
+		this.ordPrice = ordprice;
 	}
 
 	@Override
 	public String toString() {
-		return "CartDTO [proNo=" + proNo + ", proName=" + proName + ", ordQty=" + ordQty + ", ordprice=" + ordprice
+		return "CartDTO [proNo=" + proNo + ", proName=" + proName + ", ordQty=" + ordQty + ", ordPrice=" + ordPrice
 				+ "]";
 	}
 	

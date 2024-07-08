@@ -10,11 +10,10 @@ import org.springframework.stereotype.Component;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.shop.model.dto.CartDTO;
+import com.shop.model.entity.User;
 import com.shop.service.DtlService;
 import com.shop.service.OrdService;
 import com.shop.service.ProService;
-
-import javassist.expr.NewArray;
 
 @Component
 public class CartAction extends ActionSupport implements SessionAware {
@@ -24,17 +23,17 @@ public class CartAction extends ActionSupport implements SessionAware {
 	private String proName;
 	private Integer proQty;
 	private Integer proPrice;
-	
+
 	private List<CartDTO> cartList = new ArrayList<CartDTO>();
-	
+
 	Map<String, Object> session;
 
 	@Autowired
 	OrdService ordScv;
-	
+
 	@Autowired
 	ProService proSvc;
-	
+
 	@Autowired
 	DtlService dtlScv;
 
@@ -48,19 +47,30 @@ public class CartAction extends ActionSupport implements SessionAware {
 	}
 
 	public String add() {
-		CartDTO cartDTO = new CartDTO(proNo, proName, proQty, proPrice);
 		setCartList();
+		if (cartList != null) {
+			for (CartDTO cartDTO : cartList) {
+				if (cartDTO.getProNo() == proNo) {
+					cartDTO.setOrdQty(cartDTO.getOrdQty() + proQty);
+					return "success";
+				} 
+			}
+		}
+		System.out.println("add new item");
+		CartDTO cartDTO = new CartDTO(proNo, proName, proQty, proPrice);
 		cartList.add(cartDTO);
 		session.put("cart", cartList);
-		System.out.println("hi, 這是cart add");
 		return "success";
 	}
 
 	@SuppressWarnings("unchecked")
 	public String query() {
+		User user = (User) session.get("user");
+		if(user == null) {
+			return "returnLogin";
+		}
 		cartList = (List<CartDTO>) session.get("cart");
 		System.out.println(cartList);
-		System.out.println("hi, 這是cart query");
 		return "success";
 	}
 
@@ -71,7 +81,11 @@ public class CartAction extends ActionSupport implements SessionAware {
 	public String remove() {
 		return "success";
 	}
-
+	
+	public String confirmOrder() {
+		return "success";
+	}
+	
 	public Integer getUserNo() {
 		return userNo;
 	}
@@ -115,7 +129,6 @@ public class CartAction extends ActionSupport implements SessionAware {
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
-
 	}
 
 }
