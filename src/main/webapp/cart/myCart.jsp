@@ -82,7 +82,7 @@
 	        </tbody>
 	    </table>
 	    <p>總金額:<s:property value="#session.orderAmount" default="0"/>
-	    <form action="<%=request.getContextPath()%>/cart/confirmOrder" >
+	    <form action="<%=request.getContextPath()%>/cart/confirmOrder">
 	   		 <input type="submit" value="下單">
 	    </form>
 	</main>

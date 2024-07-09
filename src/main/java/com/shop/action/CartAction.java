@@ -102,7 +102,9 @@ public class CartAction extends ActionSupport implements SessionAware {
 	}
 
 	public String confirmOrder() {
-
+		if (cartList.size() == 0) {
+			return "error";
+		}
 		Ord ord = new Ord();
 		ord.setUser((User) session.get("user"));
 		ord.setOrdPrice(orderAmount());
