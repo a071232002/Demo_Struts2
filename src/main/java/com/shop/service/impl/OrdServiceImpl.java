@@ -9,8 +9,10 @@ import org.springframework.stereotype.Component;
 
 import com.shop.model.dao.DtlDAO;
 import com.shop.model.dao.OrdDAO;
+import com.shop.model.dao.ProDAO;
 import com.shop.model.entity.Dtl;
 import com.shop.model.entity.Ord;
+import com.shop.model.entity.Pro;
 import com.shop.model.entity.User;
 import com.shop.service.OrdService;
 
@@ -22,6 +24,9 @@ public class OrdServiceImpl implements OrdService {
 
 	@Autowired
 	private DtlDAO dtlDAO;
+	
+	@Autowired
+	private ProDAO proDAO;
 
 	@Override
 	@Transactional
@@ -30,9 +35,13 @@ public class OrdServiceImpl implements OrdService {
 		int ordID = ordDAO.insert(ord);
 		ord.setOrdNo(ordID);
 		for (Dtl dtl : dtlList) {
+			Pro pro = dtl.getPro();
+			pro.setProQty(pro.getProQty() - dtl.getDtlQty()); ;
+			proDAO.update(pro);
 			dtl.setOrd(ord);
+
 		}
-		dtlDAO = null;
+		
 		dtlDAO.insert(dtlList);
 		result = 1;
 		return result;

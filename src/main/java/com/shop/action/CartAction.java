@@ -49,7 +49,6 @@ public class CartAction extends ActionSupport implements SessionAware {
 		return cartList;
 	}
 
-
 	@SuppressWarnings("unchecked")
 	public void setCartList() {
 		this.cartList = (List<CartDTO>) session.getOrDefault("cart", cartList);
@@ -94,13 +93,14 @@ public class CartAction extends ActionSupport implements SessionAware {
 	}
 
 	public String confirmOrder() {
-		
+
 		Ord ord = new Ord();
 		ord.setUser((User) session.get("user"));
 		ord.setOrdPrice(orderAmount());
 		int result = ordScv.add(ord, convertToDtl());
 
 		if (result == 1) {
+			session.remove("cart");
 			System.out.println("成功");
 		}
 		return "success";
@@ -170,9 +170,9 @@ public class CartAction extends ActionSupport implements SessionAware {
 		setCartList();
 		if (cartList != null) {
 			dtlList = cartList.stream().map(item -> {
-											Pro pro = proSvc.findByProNo(item.getProNo());
-											return new Dtl(null, pro, item.getOrdQty(), item.getOrdPrice());
-									 }).collect(Collectors.toList());
+				Pro pro = proSvc.findByProNo(item.getProNo());
+				return new Dtl(null, pro, item.getOrdQty(), item.getOrdPrice());
+			}).collect(Collectors.toList());
 		}
 		return dtlList;
 	}
