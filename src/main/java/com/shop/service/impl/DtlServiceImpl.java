@@ -2,27 +2,18 @@ package com.shop.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.shop.model.dao.DtlDAO;
 import com.shop.model.entity.Dtl;
 import com.shop.service.DtlService;
 
-import jakarta.annotation.Resource;
-
 @Component("dtlService")
 public class DtlServiceImpl implements DtlService {
-
+	
+	@Autowired
 	DtlDAO dtlDAO;
-
-	public DtlDAO getDtlDAO() {
-		return dtlDAO;
-	}
-
-	@Resource(name = "dtlDAO")
-	public void setDtlDAO(DtlDAO dtlDAO) {
-		this.dtlDAO = dtlDAO;
-	}
 
 	@Override
 	public int add(List<Dtl> dtlList) {

@@ -6,6 +6,7 @@
 
 	<!-- Display name for the web application -->
 	<display-name>A03_Struts_Shop</display-name>
+	
 
    <!-- 配置監聽器，Spring容器監聽Servlet起來後會將自己初始化 -->
     <listener>
@@ -28,7 +29,6 @@
 	    <filter-name>openSessionInViewFilter</filter-name>
 	    <url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
 	
 	<!-- Struts2 Filter -->
 	<filter>

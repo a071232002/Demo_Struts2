@@ -2,12 +2,13 @@ package com.shop.service;
 
 import java.util.List;
 
+import com.shop.model.entity.Dtl;
 import com.shop.model.entity.Ord;
 import com.shop.model.entity.User;
 
 public interface OrdService {
 	
-	public int add(Ord ord);
+	public int add(Ord ord, List<Dtl> dtlList);
 	
 	public List<Ord> getAll();
 	

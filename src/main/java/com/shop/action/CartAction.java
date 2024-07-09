@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -22,6 +23,7 @@ import com.shop.service.OrdService;
 import com.shop.service.ProService;
 
 @Component
+@Scope("prototype")
 public class CartAction extends ActionSupport implements SessionAware {
 
 	private Integer userNo;
@@ -47,12 +49,14 @@ public class CartAction extends ActionSupport implements SessionAware {
 		return cartList;
 	}
 
+
 	@SuppressWarnings("unchecked")
 	public void setCartList() {
 		this.cartList = (List<CartDTO>) session.getOrDefault("cart", cartList);
 	}
 
 	public String add() {
+		System.out.println("=====================這是Action add=======================");
 		setCartList();
 		if (cartList != null) {
 			for (CartDTO cartDTO : cartList) {
@@ -62,7 +66,7 @@ public class CartAction extends ActionSupport implements SessionAware {
 				}
 			}
 		}
-		System.out.println("add new item");
+		System.out.println("=======================add new item=======================");
 		CartDTO cartDTO = new CartDTO(proNo, proName, proQty, proPrice);
 		cartList.add(cartDTO);
 		session.put("cart", cartList);
@@ -75,6 +79,7 @@ public class CartAction extends ActionSupport implements SessionAware {
 		if (user == null) {
 			return "returnLogin";
 		}
+		setCartList();
 		cartList = (List<CartDTO>) session.get("cart");
 		System.out.println(cartList);
 		return "success";
@@ -87,21 +92,19 @@ public class CartAction extends ActionSupport implements SessionAware {
 	public String remove() {
 		return "success";
 	}
-//
-//	@Transactional
-//	public String confirmOrder() {
-//		Ord ord = new Ord();
-//		ord.setUser((User) session.get("user"));
-//		ord.setOrdPrice(orderAmount());
-//		int ordID = ordScv.add(ord);
-//
-//		int result = dtlScv.add(convertToDtl(ordScv.findByOrdNo(ordID)));
-//
-//		if (result == 1) {
-//			System.out.println("成功");
-//		}
-//		return "success";
-//	}
+
+	public String confirmOrder() {
+		
+		Ord ord = new Ord();
+		ord.setUser((User) session.get("user"));
+		ord.setOrdPrice(orderAmount());
+		int result = ordScv.add(ord, convertToDtl());
+
+		if (result == 1) {
+			System.out.println("成功");
+		}
+		return "success";
+	}
 
 	public Integer getUserNo() {
 		return userNo;
@@ -162,14 +165,13 @@ public class CartAction extends ActionSupport implements SessionAware {
 		return count;
 	}
 
-	public List<Dtl> convertToDtl(Ord ord) {
+	public List<Dtl> convertToDtl() {
 		List<Dtl> dtlList = new ArrayList<Dtl>();
 		setCartList();
 		if (cartList != null) {
 			dtlList = cartList.stream().map(item -> {
-											User user = (User) session.get("user");
 											Pro pro = proSvc.findByProNo(item.getProNo());
-											return new Dtl(ord, pro, item.getOrdQty(), item.getOrdPrice());
+											return new Dtl(null, pro, item.getOrdQty(), item.getOrdPrice());
 									 }).collect(Collectors.toList());
 		}
 		return dtlList;

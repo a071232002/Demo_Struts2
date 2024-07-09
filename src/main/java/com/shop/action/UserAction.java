@@ -46,8 +46,6 @@ public class UserAction extends ActionSupport implements SessionAware {
 	}
 
 	public String login() {
-//		DAO JDBC
-//		User user = dao.findByMail(userMail);
 		User user = userSvc.login(userMail, userPsw);
 		if (user != null) {
 //		登入後, 改將使用者資料丟入session
@@ -59,7 +57,13 @@ public class UserAction extends ActionSupport implements SessionAware {
 			return "error";
 		}
 	}
-
+	public String goToMemPage() {
+		User user = (User) session.get("user");
+		if(user == null) {
+			return "returnLogin";
+		}
+		return "success";
+	}
 	public String update() {
 		User user = new User();
 		user.setUserMail(userMail.toLowerCase().trim());

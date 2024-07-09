@@ -23,14 +23,6 @@ public class OrdDAOImpl implements OrdDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-//	public SessionFactory getSessionFactory() {
-//		return sessionFactory;
-//	}
-//
-//	@Resource(name = "sessionFactory")
-//	public void setSessionFactory(SessionFactory sessionFactory) {
-//		this.sessionFactory = sessionFactory;
-//	}
 
 	@Override
 	public int insert(Ord ord) {
@@ -58,7 +50,7 @@ public class OrdDAOImpl implements OrdDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		return list;
 	}
 
