@@ -12,7 +12,7 @@
             <h4 style="display: inline; margin-right:30px;">Hello, <s:property value="#session.user.userName"/></h4>
             <a href="<%=request.getContextPath()%>/user/memCenter">會員中心</a>
             <a href="<%=request.getContextPath()%>/order/query">我的訂單</a>
-            <a href="<%=request.getContextPath()%>/cart/query">購物車</a>
+            <a href="<%=request.getContextPath()%>/cart/query">購物車(<s:property value="#session.cartSize" default="0"/>)</a>
             <a href="<%=request.getContextPath()%>/user/logout">登出</a>
         </s:if>
         <s:else>

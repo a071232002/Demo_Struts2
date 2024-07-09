@@ -71,12 +71,20 @@
 		</action>
 		
 		<action name="confirmOrder" class="com.shop.action.CartAction" method="confirmOrder">
-			<result name="success">/order/myOrder.jsp</result>
+			<result name="success" type="redirectAction">
+                <param name="namespace">/order</param>
+                <param name="actionName">query</param>
+            </result>
 		</action>
 	</package>
 	
 	<package name="order" namespace="/order" extends="struts-default">
 		<action name="query" class="com.shop.action.OrdAction" method="query">
+			<result>myOrder.jsp</result>
+			<result name="returnLogin" type="redirect">/user/login.jsp</result>
+		</action>
+		
+		<action name="showDatil" class="com.shop.action.OrdAction" method="showDatil">
 			<result>myOrder.jsp</result>
 			<result name="returnLogin" type="redirect">/user/login.jsp</result>
 		</action>

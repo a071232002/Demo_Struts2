@@ -1,0 +1,26 @@
+@charset "UTF-8";
+    .order {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #c1edb2;
+        cursor: pointer;
+	}
+
+	.order.picked,
+	.order:hover  {
+    	background-color: orange; 
+	}
+
+    .order p {
+        margin: 0;
+    }
+    
+    .dtl {
+        display: none;
+        margin-top: 10px;
+    }

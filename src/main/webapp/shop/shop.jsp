@@ -4,7 +4,7 @@
 
 <html>
 <head>
-<title>shop</title>
+<title>商店</title>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/navi.css"> 
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/dataTable.css">

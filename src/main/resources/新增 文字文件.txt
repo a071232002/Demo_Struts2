@@ -31,15 +31,10 @@ CREATE TABLE ord (
     ordSt 		TINYINT DEFAULT 0
 );
 
-INSERT INTO ord (userNo, ordPrice, ordst) VALUES 
-				('1', 100, 0),
-				('1', 1000, 0),
-				('1', 50, 0);
 
 CREATE TABLE dtl (
 	dtlNo  		INT PRIMARY KEY AUTO_INCREMENT,
     ordNo 		INT, --  NOT NULL,
-    userNo 		INT, --  NOT NULL,
     proNo  		INT, --  NOT NULL,
     dtlQty 		INT,
     dtlPrice 	INT

@@ -61,6 +61,7 @@ public class CartAction extends ActionSupport implements SessionAware {
 			for (CartDTO cartDTO : cartList) {
 				if (cartDTO.getProNo() == proNo) {
 					cartDTO.setOrdQty(cartDTO.getOrdQty() + proQty);
+					session.put("orderAmount", orderAmount());
 					return "success";
 				}
 			}
@@ -69,6 +70,8 @@ public class CartAction extends ActionSupport implements SessionAware {
 		CartDTO cartDTO = new CartDTO(proNo, proName, proQty, proPrice);
 		cartList.add(cartDTO);
 		session.put("cart", cartList);
+		session.put("cartSize", cartList.size());
+		session.put("orderAmount", orderAmount());
 		return "success";
 	}
 
@@ -93,6 +96,8 @@ public class CartAction extends ActionSupport implements SessionAware {
 		if (cartList != null) {
 			cartList.removeIf(cartDTO -> cartDTO.getProNo() == proNo);
 		}
+		session.put("cartSize", cartList.size());
+		session.put("orderAmount", orderAmount());
 		return "success";
 	}
 
@@ -104,8 +109,8 @@ public class CartAction extends ActionSupport implements SessionAware {
 		int result = ordScv.add(ord, convertToDtl());
 
 		if (result == 1) {
-			session.remove("cart");
-			System.out.println("成功");
+			cartReset();
+			System.out.println("下單成功");
 		}
 		return "success";
 	}
@@ -154,7 +159,13 @@ public class CartAction extends ActionSupport implements SessionAware {
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
 	}
-
+	
+	public void cartReset() {
+		session.remove("cart");
+		session.remove("cartSize");
+		session.remove("orderAmount");
+	}
+	
 	public int orderAmount() {
 		int count = 0;
 		setCartList();

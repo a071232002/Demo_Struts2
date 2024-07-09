@@ -17,7 +17,7 @@ public class UserAction extends ActionSupport implements SessionAware {
 	private String userName;
 	private String userPsw;
 	private Map<String, Object> session;
-	
+
 	@Autowired
 	private UserService userSvc;
 
@@ -57,13 +57,15 @@ public class UserAction extends ActionSupport implements SessionAware {
 			return "error";
 		}
 	}
+
 	public String goToMemPage() {
 		User user = (User) session.get("user");
-		if(user == null) {
+		if (user == null) {
 			return "returnLogin";
 		}
 		return "success";
 	}
+
 	public String update() {
 		User user = new User();
 		user.setUserMail(userMail.toLowerCase().trim());
@@ -76,7 +78,9 @@ public class UserAction extends ActionSupport implements SessionAware {
 	}
 
 	public String logout() {
-		session.remove("user");
+		if (session != null) {
+			session.clear();
+		}
 		return "success";
 	}
 
