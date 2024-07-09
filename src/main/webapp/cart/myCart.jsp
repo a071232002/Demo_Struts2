@@ -65,20 +65,23 @@
 	        <tbody>
 	            <s:iterator value="cartList" var="cart">
 			            <tr>
-	                 		<form action="<%=request.getContextPath()%>/cart/confirmOrder" >
+	                 		<form action="<%=request.getContextPath()%>/cart/remove" >
 								<td><s:property value="#cart.proNo" /></td>
 								<td><s:property value="#cart.proName" /></td>
 								<td><s:property value="#cart.ordPrice" /></td>
 								<td>
 									<s:property value="#cart.ordQty" />
-									
-									<input type="submit" value="TEST">
+								<input type="hidden" name="proNo" value="<s:property value="#cart.proNo" />"> 
+								<input type="submit" value="刪除">
 								</td>
 	                  		</form>
 						</tr>
 	            </s:iterator>
 	        </tbody>
 	    </table>
+	    <form action="<%=request.getContextPath()%>/cart/confirmOrder" >
+	   		 <input type="submit" value="下單">
+	    </form>
 	</main>
     <!-- jQuery -->
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

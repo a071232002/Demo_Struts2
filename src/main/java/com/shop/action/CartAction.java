@@ -89,6 +89,10 @@ public class CartAction extends ActionSupport implements SessionAware {
 	}
 
 	public String remove() {
+		setCartList();
+		if (cartList != null) {
+			cartList.removeIf(cartDTO -> cartDTO.getProNo() == proNo);
+		}
 		return "success";
 	}
 

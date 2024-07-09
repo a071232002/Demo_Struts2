@@ -7,7 +7,6 @@
     <constant name="struts.objectFactory" value="spring" />
 	
 	<package name="user" namespace="/user" extends="struts-default">
-	
 		<action name="register">
 			<result>register.jsp</result>
 		</action>
@@ -51,7 +50,6 @@
 	</package>
 	
 	<package name="cart" namespace="/cart" extends="struts-default">
-	
 		<action name="query" class="com.shop.action.CartAction" method="query">
 			<result>myCart.jsp</result>
 			<result name="returnLogin" type="redirect">/user/login.jsp</result>
@@ -64,10 +62,17 @@
             </result>
 		</action>
 		
+		<action name="update" class="com.shop.action.CartAction" method="update">
+			<result>myCart.jsp</result>
+		</action>
+		
+		<action name="remove" class="com.shop.action.CartAction" method="remove">
+			<result>myCart.jsp</result>
+		</action>
+		
 		<action name="confirmOrder" class="com.shop.action.CartAction" method="confirmOrder">
 			<result name="success">/order/myOrder.jsp</result>
 		</action>
-		
 	</package>
 	
 	<package name="order" namespace="/order" extends="struts-default">
