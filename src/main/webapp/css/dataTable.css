@@ -51,6 +51,25 @@ form {
 	background-color: #218838;
 }
 
+.delete-button {
+	background-color: red;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 14px;
+	margin: 0px;
+	margin-right:20px;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+.delete-button:hover {
+	background-color: orange;
+}
+
 select {
 	padding: 5px;
 	border-radius: 4px;

@@ -18,17 +18,20 @@
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
+        
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
             border: 2px solid #ddd;
         }
+        
         table th, table td {
             padding: 12px;
             text-align: center;
             border-bottom: 1px solid #ddd;
         }
+        
         table th {
             background-color: #f7f7f7;
             color: #333;
@@ -37,15 +40,26 @@
             font-weight: bold;
             border-right: 1px solid #ddd;
         }
+        
         table tbody tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+        
         table tbody tr:hover {
             background-color: #e0e0e0;
         }
+        
         form {
             margin: 0;
         }
+        #orderAmount {
+		    margin: 10px 20px;
+		    color: blue;
+		    font-size: 16px;
+		    line-height: 1.4;
+		    font-weight: bold;
+		    text-decoration: underline;
+		}
 </style>
     
 </head>
@@ -67,24 +81,30 @@
 			            <tr>
 							<td>
 								<s:property value="#cart.proNo" />
-		                 		<form action="<%=request.getContextPath()%>/cart/remove" >
-									<input type="hidden" name="proNo" value="<s:property value="#cart.proNo" />"> 
-									<input type="submit" value="刪除">
-		                  		</form>
 							</td>
 							<td><s:property value="#cart.proName" /></td>
 							<td><s:property value="#cart.ordPrice" /></td>
 							<td>
-									<s:property value="#cart.ordQty" />
-								</td>
+								<div style="display: flex; align-items: center; justify-content: center;">
+								<form action="<%=request.getContextPath()%>/cart/remove" >
+										<input type="hidden" name="proNo" value="<s:property value="#cart.proNo" />"> 
+										<input type="submit" value="X" class="delete-button">
+			                  	</form>
+								<button style="margin:0px 5px;" onclick="updateQuantity('<s:property value="#cart.proNo" />', -1)">-</button>
+                				<span id="qty-<s:property value="#cart.proNo" />"><s:property value="#cart.ordQty" /></span>
+                				<button style="margin:0px 5px;" onclick="updateQuantity('<s:property value="#cart.proNo" />', 1)">+</button>
+                				</div>
+							</td>
 						</tr>
 	            </s:iterator>
 	        </tbody>
 	    </table>
-	    <p>總金額:<s:property value="#session.orderAmount" default="0"/>
+	    <div style="display: flex; justify-content: flex-end; align-items: center;">
+	    <p id="orderAmount">總金額: <s:property value="#session.orderAmount" default="0"/>
 	    <form action="<%=request.getContextPath()%>/cart/confirmOrder">
-	   		 <input type="submit" value="下單">
+	   		 <input type="submit" value="下單" class="submit-button">
 	    </form>
+	    </div>
 	</main>
 	
     <!-- jQuery -->
@@ -100,6 +120,41 @@
              info: false       
         });
     });
+
+    function updateQuantity(proNo, change) {
+        var currentQty = parseInt(document.getElementById('qty-' + proNo).innerText);
+        var newQty = currentQty + change;
+        
+        if (newQty < 1) {
+            return;
+        }
+
+        document.getElementById('qty-' + proNo).innerText = newQty;
+
+        fetch('<%=request.getContextPath()%>/cart/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'proNo=' + proNo + '&proQty=' + newQty
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .then(data => {
+            console.log('Success:', data);
+        	document.getElementById('orderAmount').innerText = '總金額: ' + data.orderAmount;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+        
+    
 </script>
 </body>
 

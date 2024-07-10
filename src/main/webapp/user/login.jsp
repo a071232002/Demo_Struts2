@@ -72,7 +72,7 @@
         </s:if>
     
         <s:form action="welcome" class="form">
-            <label for="userMail">信箱:</label>
+            <label for="userMail">帳號:</label>
             <input type="text" id="userMail" name="userMail" class="input">
             <br><br>
             <label for="userPsw">密碼:</label>

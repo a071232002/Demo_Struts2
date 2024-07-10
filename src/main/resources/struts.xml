@@ -49,7 +49,7 @@
 		</action>
 	</package>
 	
-	<package name="cart" namespace="/cart" extends="struts-default">
+	<package name="cart" namespace="/cart" extends="struts-default, json-default">
 		<action name="query" class="com.shop.action.CartAction" method="query">
 			<result>myCart.jsp</result>
 			<result name="returnLogin" type="redirect">/user/login.jsp</result>
@@ -63,7 +63,9 @@
 		</action>
 		
 		<action name="update" class="com.shop.action.CartAction" method="update">
-			<result>myCart.jsp</result>
+			<result type="json" name="success">
+            <param name="orderAmount">orderAmount</param>
+        </result>
 		</action>
 		
 		<action name="remove" class="com.shop.action.CartAction" method="remove">

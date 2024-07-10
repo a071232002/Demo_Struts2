@@ -43,7 +43,7 @@ public class OrdDAOImpl implements OrdDAO {
 		Session session = sessionFactory.getCurrentSession();
 		List<Ord> list = new ArrayList<Ord>();
 		try {
-			String hql = "FROM Ord o WHERE o.user.userNo = :user";
+			String hql = "FROM Ord o WHERE o.user.userNo = :user ORDER BY o.ordNo DESC";
 			list = session.createQuery(hql, Ord.class)
 						  .setParameter("user", userNo)
 						  .getResultList();

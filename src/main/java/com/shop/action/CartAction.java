@@ -31,7 +31,9 @@ public class CartAction extends ActionSupport implements SessionAware {
 	private String proName;
 	private Integer proQty;
 	private Integer proPrice;
-
+	
+	private Integer orderAmount;
+	
 	private List<CartDTO> cartList = new ArrayList<CartDTO>();
 
 	Map<String, Object> session;
@@ -57,7 +59,7 @@ public class CartAction extends ActionSupport implements SessionAware {
 	public String add() {
 		System.out.println("=====================這是Action add=======================");
 		setCartList();
-		if (cartList != null) {
+		if (cartList.size() != 0) {
 			for (CartDTO cartDTO : cartList) {
 				if (cartDTO.getProNo() == proNo) {
 					cartDTO.setOrdQty(cartDTO.getOrdQty() + proQty);
@@ -69,6 +71,8 @@ public class CartAction extends ActionSupport implements SessionAware {
 		System.out.println("=======================add new item=======================");
 		CartDTO cartDTO = new CartDTO(proNo, proName, proQty, proPrice);
 		cartList.add(cartDTO);
+		System.out.println(cartList);
+		
 		session.put("cart", cartList);
 		session.put("cartSize", cartList.size());
 		session.put("orderAmount", orderAmount());
@@ -88,6 +92,18 @@ public class CartAction extends ActionSupport implements SessionAware {
 	}
 
 	public String update() {
+		setCartList();
+		System.out.println(proNo);
+		System.out.println(proQty);
+		cartList.stream().filter(item -> item.getProNo().equals(proNo))
+        				 .findFirst()
+        				 .ifPresent(item -> item.setOrdQty(proQty));
+		
+		System.out.println(cartList);
+		
+		session.put("cart", cartList);
+		session.put("orderAmount", orderAmount());
+		this.orderAmount = orderAmount();
 		return "success";
 	}
 
@@ -102,6 +118,7 @@ public class CartAction extends ActionSupport implements SessionAware {
 	}
 
 	public String confirmOrder() {
+		setCartList();
 		if (cartList.size() == 0) {
 			return "error";
 		}
@@ -156,6 +173,14 @@ public class CartAction extends ActionSupport implements SessionAware {
 	public void setProPrice(Integer proPrice) {
 		this.proPrice = proPrice;
 	}
+	
+	public Integer getOrderAmount() {
+		return orderAmount;
+	}
+
+	public void setOrderAmount(Integer orderAmount) {
+		this.orderAmount = orderAmount;
+	}
 
 	@Override
 	public void setSession(Map<String, Object> session) {
@@ -171,7 +196,7 @@ public class CartAction extends ActionSupport implements SessionAware {
 	public int orderAmount() {
 		int count = 0;
 		setCartList();
-		if (cartList != null) {
+		if (cartList.size() != 0 ) {
 			for (CartDTO cartDTO : cartList) {
 				int qty = cartDTO.getOrdQty();
 				int price = cartDTO.getOrdPrice();

@@ -31,7 +31,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <s:iterator value="dtlMap[#ord.ordNo]" var="dtlList">
+                    	<s:set var="dtlList" value="dtlMap[#ord.ordNo]" />
+                        <!--<s:iterator value="dtlMap[#ord.ordNo]" var="dtlList"> -->
                             <s:iterator value="dtlList" var="dtl">
                                 <tr>
                                     <td><s:property value="#dtl.pro.proNo" /></td>
@@ -40,7 +41,7 @@
                                     <td><s:property value="#dtl.dtlQty" /></td>
                                 </tr>
                             </s:iterator>
-                        </s:iterator>
+                        <!--</s:iterator>-->
                     </tbody>
                 </table>
             </div>
