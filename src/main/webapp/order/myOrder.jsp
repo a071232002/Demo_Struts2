@@ -18,7 +18,18 @@
     		<div class="order" onclick="toggleDetails(this)">
 	                <p>訂單編號: <s:property value="#ord.ordNo" /></p>
 	                <p>訂單金額: <s:property value="#ord.ordPrice" /></p>
-	                <p>訂單狀態: <s:property value="#ord.ordSt" /></p>
+	            
+                    <p>訂單狀態:
+					    <s:if test="%{#ord.ordSt == 0}">
+					        未出貨
+					    </s:if>
+					    <s:elseif test="%{#ord.ordSt == 1}">
+					        已出貨
+					    </s:elseif>
+					    <s:else>
+					        其他狀態
+					    </s:else>
+					</p>
         	</div>
             <div class="dtl">
                 <table class="dtlTable">
