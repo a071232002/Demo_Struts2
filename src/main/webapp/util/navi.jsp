@@ -6,6 +6,7 @@
     <div class="index-navi">
         <a href="<%=request.getContextPath()%>/">首頁</a>
         <a href="<%=request.getContextPath()%>/shop/index">商城</a>
+        <a href="<%=request.getContextPath()%>/manage/select">後台管理</a>
     </div>
     <div class="user-options">
         <s:if test="#session.user != null">

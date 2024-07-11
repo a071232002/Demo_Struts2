@@ -8,7 +8,11 @@ public interface ProDAO {
 	
 	public int insert(Pro pro);
 	
+	public int insertAll(List<Pro> proList);
+	
 	public List<Pro> getAll();
+	
+	public List<Pro> getAddItems(int insertCount);
 	
 	public Pro findByProNo(int proNo);
 	

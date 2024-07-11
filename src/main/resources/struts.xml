@@ -64,8 +64,8 @@
 		
 		<action name="update" class="com.shop.action.CartAction" method="update">
 			<result type="json" name="success">
-            <param name="orderAmount">orderAmount</param>
-        </result>
+            	<param name="orderAmount">orderAmount</param>
+        	</result>
 		</action>
 		
 		<action name="remove" class="com.shop.action.CartAction" method="remove">
@@ -92,4 +92,22 @@
 		</action>
 	</package>
 	
+	<package name="manage" namespace="/manage" extends="struts-default, json-default">
+		<action name="select">
+			<result>/manage/select.jsp</result>
+		</action>
+		
+		<action name="proUpload" class="com.shop.action.ManageAction" method="importProByFileUpload">
+			<result name="success" type="json">
+                <param name="insertCount">insertCount</param>
+                <param name="newProList">newProList</param>
+            </result>
+		</action>
+		
+		<action name="getOrderInfo" class="com.shop.action.ManageAction" method="getOrderInfo">
+			<result type="json" name="success">
+            	<param name="ordDTOList">ordDTOList</param>
+            </result>
+		</action>
+	</package>
 </struts>

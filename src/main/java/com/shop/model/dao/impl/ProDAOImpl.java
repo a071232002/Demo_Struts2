@@ -43,7 +43,26 @@ public class ProDAOImpl implements ProDAO {
 		}
 
 	}
+	
+	@Override
+	public int insertAll(List<Pro> proList) {
+		Session session = sessionFactory.getCurrentSession();
+		int insertCount = 0;
+		try {
+			
+			for (Pro pro : proList) {
+				session.save(pro);
+				insertCount++;
+			}
+			return insertCount;
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+
+	}
+	
 	@Override
 	public Pro findByProNo(int proNo) {
 		Session session = sessionFactory.getCurrentSession();
@@ -55,7 +74,23 @@ public class ProDAOImpl implements ProDAO {
 		}
 		return pro;
 	}
-
+	
+	@Override
+	public List<Pro> getAddItems(int insertCount){
+		Session session = sessionFactory.getCurrentSession();
+		List<Pro> list = new ArrayList<Pro>();
+		try {
+			String hql = "FROM Pro ORDER BY ProNo DESC";
+	        list = session.createQuery(hql, Pro.class)
+	                      .setMaxResults(insertCount)
+	                      .getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
 	@Override
 	public List<Pro> getAll() {
 		Session session = sessionFactory.getCurrentSession();
