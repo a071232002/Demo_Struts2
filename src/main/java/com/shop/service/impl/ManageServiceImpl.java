@@ -19,9 +19,11 @@ import org.springframework.stereotype.Component;
 import com.shop.model.dao.DtlDAO;
 import com.shop.model.dao.OrdDAO;
 import com.shop.model.dao.ProDAO;
+import com.shop.model.dao.impl.DtlDAOImpl;
 import com.shop.model.dto.DtlDTO;
 import com.shop.model.dto.OrdDTO;
 import com.shop.model.entity.Dtl;
+import com.shop.model.entity.Ord;
 import com.shop.model.entity.Pro;
 import com.shop.service.ManageService;
 
@@ -36,7 +38,23 @@ public class ManageServiceImpl implements ManageService {
 
 	@Autowired
 	DtlDAO dtlDAO;
-
+	
+	
+	@Override
+	public List<OrdDTO> getOrdWithCondition(int ordNo) {
+		List<OrdDTO> list = new ArrayList<OrdDTO>();
+		Ord ord = ordDAO.findByOrdNo(ordNo);
+		OrdDTO ordDTO = new OrdDTO ( ord.getOrdNo(),
+							 		 ord.getUser().getUserNo(),
+							 		 ord.getOrdPrice(),
+							 		 ord.getOrdSt(),
+							 		 dtlFormatToDTO(dtlDAO.findByOrdNo(ordNo)));
+		list.add(ordDTO);
+		System.out.println(list);
+		return list;
+	}
+	
+	
 	@Override
 	public List<OrdDTO> getAllOrd() {
 		List<OrdDTO> list = new ArrayList<OrdDTO>();
@@ -112,5 +130,7 @@ public class ManageServiceImpl implements ManageService {
 							                 dtl.getDtlPrice()))
 					  .collect(Collectors.toList());
 	}
+
+
 	
 }

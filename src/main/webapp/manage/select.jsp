@@ -204,13 +204,21 @@
         $(document).ready(function() {
             $('#queryOrdBtn').click(function() {
             	$('.overlay').css('display', 'flex');
-                var ordNo = $('#ordNo').val();
-
+                var ordNo = $('#ordNo').val().trim();
+                
+                
+                if (ordNo !== "" &&!/^\d+$/.test(ordNo)) {
+                 alert('請輸入數字');
+                 $('.overlay').hide();
+                 return;
+                }
+                
+                
                 $.ajax({
                     url: '<%=request.getContextPath()%>/manage/getOrderInfo',
                     type: 'POST',
                     contentType: 'application/json',
-                    dataType: 'json',
+                    
                     data: JSON.stringify({ ordNo: ordNo }),
                     success: function(response) {
                     	

@@ -93,6 +93,17 @@
 	</package>
 	
 	<package name="manage" namespace="/manage" extends="struts-default, json-default">
+		
+		 <interceptors>
+            <interceptor name="json" class="org.apache.struts2.json.JSONInterceptor"/>
+            <interceptor-stack name="jsonStack">
+                <interceptor-ref name="json"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="jsonStack"/>
+	
 		<action name="select">
 			<result>/manage/select.jsp</result>
 		</action>

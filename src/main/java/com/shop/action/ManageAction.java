@@ -27,7 +27,7 @@ public class ManageAction extends ActionSupport implements SessionAware {
 	private List<Pro> newProList;
 
 //	訂單查詢
-	private int ordNo;
+	private String ordNo;
 	private List<OrdDTO> ordDTOList;
 
 	private List<Integer> ordNos;
@@ -40,6 +40,7 @@ public class ManageAction extends ActionSupport implements SessionAware {
 
 	@Autowired
 	ManageService manageSvc;
+	
 
 	@Override
 	public void setSession(Map<String, Object> session) {
@@ -78,9 +79,15 @@ public class ManageAction extends ActionSupport implements SessionAware {
 	}
 
 	public String getOrderInfo() {
-		System.out.println(ordNo);
+		System.err.println(ordNo);
 
+		if (this.ordNo.length() != 0) {
+			
+			this.ordDTOList = manageSvc.getOrdWithCondition(Integer.valueOf(ordNo));
+			return "success";
+		}
 		this.ordDTOList = manageSvc.getAllOrd();
+		
 		return "success";
 	}
 	
@@ -101,11 +108,11 @@ public class ManageAction extends ActionSupport implements SessionAware {
 		this.fileName = fileName;
 	}
 
-	public int getOrdNo() {
+	public String getOrdNo() {
 		return ordNo;
 	}
 
-	public void setOrdNo(int ordNo) {
+	public void setOrdNo(String ordNo) {
 		this.ordNo = ordNo;
 	}
 

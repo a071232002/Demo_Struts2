@@ -20,6 +20,8 @@ public interface ManageService {
 	public int deleteOrd(int ordNo);
 	
 	public List<OrdDTO> getAllOrd(); 
+ 
+	public List<OrdDTO> getOrdWithCondition(int ordNo); 
 	
 	public List<DtlDTO> dtlFormatToDTO(List<Dtl> dtlList);
 	
