@@ -1,5 +1,7 @@
 package com.shop.model.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "pro")
 @Component
-public class Pro {
+public class Pro implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

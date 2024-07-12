@@ -21,6 +21,10 @@ import com.shop.service.ManageService;
 @Component
 public class ManageAction extends ActionSupport implements SessionAware {
 
+//	範本下載
+	private InputStream inputStream;
+	private String fileName;
+	
 //	商品匯入
 	private File proData;
 	private int insertCount;
@@ -32,9 +36,6 @@ public class ManageAction extends ActionSupport implements SessionAware {
 
 	private List<Integer> ordNos;
 
-//	範本下載
-	private InputStream inputStream;
-	private String fileName;
 
 	Map<String, Object> session;
 
@@ -65,12 +66,15 @@ public class ManageAction extends ActionSupport implements SessionAware {
 
 		try {
 			proList = manageSvc.excelToProList(proData);
+		
 			if (proList.size() > 0) {
 				this.insertCount = manageSvc.importProItem(proList);
 				this.newProList = manageSvc.getAddItems(insertCount);
 			} else {
 				return "error";
 			}
+			System.out.println(insertCount);
+			System.out.println(newProList);
 			return "success";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,9 +83,9 @@ public class ManageAction extends ActionSupport implements SessionAware {
 	}
 
 	public String getOrderInfo() {
-		System.err.println(ordNo);
+		
 
-		if (this.ordNo.length() != 0) {
+		if (!"".equals(this.ordNo) && this.ordNo != null) {
 			
 			this.ordDTOList = manageSvc.getOrdWithCondition(Integer.valueOf(ordNo));
 			return "success";
