@@ -97,6 +97,16 @@
 			<result>/manage/select.jsp</result>
 		</action>
 		
+		<action name="downloadSpec" class="com.shop.action.ManageAction" method="downloadSpec">
+			<result name="success" type="stream">
+	            <param name="contentType">application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</param>
+	            <param name="inputName">inputStream</param>
+	            <param name="contentDisposition">attachment;filename=${fileName}</param>
+	            <param name="bufferSize">1024</param>
+	        </result>
+	        <result name="error">/error.jsp</result>
+		</action>
+		
 		<action name="proUpload" class="com.shop.action.ManageAction" method="importProByFileUpload">
 			<result name="success" type="json">
                 <param name="insertCount">insertCount</param>

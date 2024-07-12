@@ -36,6 +36,7 @@
 		  margin-bottom: 20px;
 	  }
 		
+	  .controlArea .downloadArea,
 	  .controlArea .proOption,
 	  .controlArea .ordOption {
 	  	  width: 290px;
@@ -48,6 +49,10 @@
     	  border-radius: 5px;
     	  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     	  background-color: #fff;
+      }
+      
+      .controlArea .downloadArea {
+      	  width: 200px;
       }
       
       .ordOption {
@@ -63,6 +68,9 @@
 	<%@ include file="/util/navi.jsp"%>
 	<main>
 	<div class="controlArea">
+		<div class="downloadArea">
+			<input type="button" id="downloadSpec" value="下載商品匯入範本" class="button">
+		</div>
 		<div class="proOption">
 			<form id="proUpload" class="form" method="post" enctype="multipart/form-data">
 				<label>請選擇Excel檔案</label> 
@@ -83,6 +91,36 @@
 	</main>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>	
+	
+	
+	<script>
+        $(document).ready(function() {
+            $('#downloadSpec').click(function() {
+                
+                $.ajax({
+                    url: 'downloadSpec',
+                    method: 'GET',
+                    xhrFields: {
+                        responseType: 'blob'
+                    },
+                    success: function(data) {
+                        var a = document.createElement('a');
+                        var url = window.URL.createObjectURL(data);
+                        a.href = url;
+                        a.download = 'example.xlsx';
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error downloading file:', error);
+                        alert('下載檔案失敗');
+                    }
+                });
+            });
+        });
+    </script>
 	
 	<!-- 新增商品 -->
 	<script>
@@ -114,8 +152,13 @@
 					error : function(jqXHR, textStatus, errorThrown) {
 						
                         $('.overlay').hide();
-						
-						alert('匯入失敗' + textStatus);
+                        if (jqXHR.status === 404) {
+							alert('請選擇檔案, 並檢查格式');
+							$('#proData').val('')
+                        } else {
+                        	alert('匯入失敗, 請檢查格式');
+                        	$('#proData').val('')
+                            }
 					}
 				});
 			});
@@ -162,14 +205,15 @@
             $('#queryOrdBtn').click(function() {
             	$('.overlay').css('display', 'flex');
                 var ordNo = $('#ordNo').val();
-                console.log(ordNo);
+
                 $.ajax({
                     url: '<%=request.getContextPath()%>/manage/getOrderInfo',
                     type: 'POST',
                     contentType: 'application/json',
+                    dataType: 'json',
                     data: JSON.stringify({ ordNo: ordNo }),
                     success: function(response) {
-                    	console.log(JSON.stringify({ ordNo: ordNo }));
+                    	
                         $('.overlay').hide();
                       
                         $('.resultArea').empty();
@@ -178,6 +222,7 @@
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.error('Error: ' + textStatus, errorThrown);
+                        alert('查無此訂單編號');
                         $('.overlay').hide();
                     }
                 });
