@@ -21,6 +21,12 @@
 	text-align: center;
 }
 
+div label{
+	margin-bottom: 5px;
+	font-weight: bold;
+	text-align: center;
+}
+
 .input {
 	padding: 10px;
 	margin-bottom: 15px;
@@ -37,11 +43,11 @@
 	border-radius: 5px;
 	cursor: pointer;
 	font-size: 16px;
-	display: block; /* 让按钮成为块级元素 */
-	width: 100%; /* 延展至整行宽度 */
-	margin: 0 auto; /* 水平居中 */
-	text-align: center; /* 文字居中 */
-	box-sizing: border-box; /* 保证 padding 和 border 在计算宽度时不会额外增加 */
+	display: block; 
+	width: 100%; 
+	margin: 0 auto; 
+	text-align: center; 
+	box-sizing: border-box; 
 }
 
 .button:hover {

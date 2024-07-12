@@ -59,6 +59,13 @@ public class DtlDTO {
 		this.ordPrice = ordPrice;
 	}
 
+
+	@Override
+	public String toString() {
+		return "DtlDTO [proNo=" + proNo + ", proName=" + proName + ", ordQty=" + ordQty + ", ordPrice=" + ordPrice
+				+ "]";
+	}
+
 	
 	
 }

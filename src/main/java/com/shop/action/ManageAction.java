@@ -1,15 +1,10 @@
 package com.shop.action;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,9 +22,17 @@ public class ManageAction extends ActionSupport implements SessionAware {
 	private int insertCount;
 	private List<Pro> newProList;
 
+//	訂單查詢
+	private int ordNo;
 	private List<OrdDTO> ordDTOList;
+	
+	
+	private List<Integer> ordNos;
+	
+	
 	Map<String, Object> session;
 
+	
 	@Autowired
 	ManageService manageSvc;
 
@@ -42,41 +45,39 @@ public class ManageAction extends ActionSupport implements SessionAware {
 		List<Pro> proList = new ArrayList<Pro>();
 		
 		try {
-			FileInputStream fileInputStream = new FileInputStream(proData);
-			Workbook workbook = new XSSFWorkbook(fileInputStream);
-			Sheet sheet = workbook.getSheetAt(0);
-
-			boolean isFirstRow = true;
-			for (Row row : sheet) {
-				if (isFirstRow) {
-					isFirstRow = false;
-					continue;
-				}
-				String proName = row.getCell(0).getStringCellValue();
-				int proPrice = (int) row.getCell(1).getNumericCellValue();
-				int proQty = (int) row.getCell(2).getNumericCellValue();
-				
-				Pro pro = new Pro();
-				pro.setProName(proName);
-				pro.setProPrice(proPrice);
-				pro.setProQty(proQty);
-
-				proList.add(pro);
-			}
-			
-
+			proList = manageSvc.excelToProList(proData);
 			if (proList.size() > 0) {
 				this.insertCount = manageSvc.importProItem(proList);
 				this.newProList = manageSvc.getAddItems(insertCount);
-				System.out.println(newProList);
 			}
-
 			return "success";
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error";
 		}
+	}
+	
+	public String getOrderInfo() {
+		System.out.println(ordNo);
+		this.ordDTOList =  manageSvc.getAllOrd();
+		return "success";
+	}
+	
+	
+	public int getOrdNo() {
+		return ordNo;
+	}
+
+	public void setOrdNo(int ordNo) {
+		this.ordNo = ordNo;
+	}
+
+	public List<Integer> getOrdNos() {
+		return ordNos;
+	}
+
+	public void setOrdNos(List<Integer> ordNos) {
+		this.ordNos = ordNos;
 	}
 
 	public File getProData() {

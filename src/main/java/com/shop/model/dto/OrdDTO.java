@@ -10,7 +10,7 @@ public class OrdDTO {
 	
 	private int ordPrice;
 	
-	private byte ordSt;
+	private String ordSt;
 	
 	private List<DtlDTO> dtlDTOList;
 
@@ -20,7 +20,7 @@ public class OrdDTO {
 		this.ordNo = ordNo;
 		this.userNo = userNo;
 		this.ordPrice = ordPrice;
-		this.ordSt = ordSt;
+		this.ordSt = getOrdStatusText(ordSt);
 		this.dtlDTOList = dtlDTOList;
 	}
 
@@ -48,12 +48,12 @@ public class OrdDTO {
 		this.ordPrice = ordPrice;
 	}
 
-	public byte getOrdSt() {
+	public String getOrdSt() {
 		return ordSt;
 	}
 
 	public void setOrdSt(byte ordSt) {
-		this.ordSt = ordSt;
+		this.ordSt = getOrdStatusText(ordSt);
 	}
 
 	public List<DtlDTO> getDtlDTOList() {
@@ -62,6 +62,26 @@ public class OrdDTO {
 
 	public void setDtlDTOList(List<DtlDTO> dtlDTOList) {
 		this.dtlDTOList = dtlDTOList;
+	}
+	
+	
+	private String getOrdStatusText(byte ordSt) {
+	        switch (ordSt) {
+	            case 0:
+	                return "未出貨";
+	            case 1:
+	                return "已出貨";
+	            case 9:
+	                return "退貨";
+	            default:
+	                return "其他狀態";
+	      }
+	}
+	
+	@Override
+	public String toString() {
+		return "OrdDTO [ordNo=" + ordNo + ", userNo=" + userNo + ", ordPrice=" + ordPrice + ", ordSt=" + ordSt
+				+ ", dtlDTOList=" + dtlDTOList + "]";
 	}
 	
 	
