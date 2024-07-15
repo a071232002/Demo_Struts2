@@ -97,7 +97,13 @@ public class ManageAction extends ActionSupport implements SessionAware {
 	
 	public String deleteOrder() {
 		System.out.println(ordNos);
-		return "success";
+		try {
+			manageSvc.deleteOrd(ordNos);			
+			return "success";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
 	}
 	
 	
@@ -130,7 +136,6 @@ public class ManageAction extends ActionSupport implements SessionAware {
 	}
 
 	public void setOrdNos(List<Integer> ordNos) {
-		System.out.println("set!!");
 		this.ordNos = ordNos;
 	}
 

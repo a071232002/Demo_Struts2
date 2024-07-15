@@ -92,4 +92,10 @@ public class OrdDAOImpl implements OrdDAO {
 		return -1;
 	}
 
+	@Override
+	public void delete(Ord ord) {
+		Session session = sessionFactory.getCurrentSession();
+		session.delete(ord);
+	}
+
 }

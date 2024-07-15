@@ -69,7 +69,7 @@
 		
 		.ordInfo input,
 		.ordInfo div	{
-			vertical-align: middle
+			vertical-align: middle;
 		}
 		
 		.ordInfo div	{
@@ -82,7 +82,12 @@
 		    height: 20px; 
 		   	margin-right: 10px;
 		}
-
+		
+		.checkAll {
+		    width: 20px; 
+		    height: 20px; 
+		   	margin-right: 10px;
+		}
       
 </style>
 
@@ -225,47 +230,53 @@
 	
 	<!-- 顯示訂單 -->
 	<script>
-        $(document).ready(function() {
-            $('#queryOrdBtn').click(function() {
-            	$('.overlay').css('display', 'flex');
-                var ordNo = $('#ordNo').val().trim();
-                
-                if (ordNo !== "" &&!/^\d+$/.test(ordNo)) {
-                 alert('請輸入數字');
-                 $('.overlay').hide();
-                 return;
-                }
-                
-                
-                $.ajax({
-                    url: '<%=request.getContextPath()%>/manage/getOrderInfo',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    
-                    data: JSON.stringify({ ordNo: ordNo }),
-                    success: function(response) {
-                    	
-                        $('.overlay').hide();
-                      
-                        $('.resultArea').empty();
-				        var ordTableHtml = generateOrderTable(response.ordDTOList);
-				        bindDeleteOrderButton();
-				        $('.resultArea').append(ordTableHtml);
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('Error: ' + textStatus, errorThrown);
-                        alert('查無此訂單編號');
-                        $('.overlay').hide();
-                    }
-                });
-            });
-        });
+	 	
+			$(document).ready(function() {
+        	
+	            $('#queryOrdBtn').click(function() {
+	            	$('.overlay').css('display', 'flex');
+	                var ordNo = $('#ordNo').val().trim();
+	                
+	                if (ordNo !== "" &&!/^\d+$/.test(ordNo)) {
+	                 alert('請輸入數字');
+	                 $('.overlay').hide();
+	                 return;
+	                }
+	                
+	                
+	                $.ajax({
+	                    url: '<%=request.getContextPath()%>/manage/getOrderInfo',
+	                    type: 'POST',
+	                    contentType: 'application/json',
+	                    
+	                    data: JSON.stringify({ ordNo: ordNo }),
+	                    success: function(response) {
+	                    	
+	                        $('.overlay').hide();
+	                      
+	                        $('.resultArea').empty();
+					        var ordTableHtml = generateOrderTable(response.ordDTOList);
+					        bindDeleteOrderButton();
+					        $('.resultArea').append(ordTableHtml);
+	                    },
+	                    error: function(jqXHR, textStatus, errorThrown) {
+	                        console.error('Error: ' + textStatus, errorThrown);
+	                        alert('查無此訂單編號');
+	                        $('.overlay').hide();
+	                    }
+	                });
+	            });
+        	});
+       	
 
         function generateOrderTable(ords) {
 		    var ordTableHtml = '';
 		    ordTableHtml += `
 			    			<p>訂單查詢結果如下</p>
+			    			<div class="ordInfo" style="margin-bottom:10px;">
+			    			<input type="checkbox" class=".checkAll" id="checkAll" name="checkAll"><p style="margin-right:20px;">全選</p>
 			    			<button id="deleteOrderBtn" class="delete-button">刪除</button>
+			    			</div>
 			    			`;
 			ords.forEach(ord => {
 				ordTableHtml += `
@@ -324,8 +335,8 @@
 
         function bindDeleteOrderButton() {
 	        $(document).ready(function() {
-	
 	            $('#deleteOrderBtn').click(function() {
+	        	$('.overlay').css('display', 'flex');
 	                var ordNos = [];
 	
 	                $('.order-checkbox:checked').each(function() {
@@ -334,7 +345,11 @@
 					console.log(ordNos);
 	                sendOrdNos(ordNos);
 	            });
-	
+
+	            $('#checkAll').click(function() {
+	                var isChecked = $(this).prop('checked');
+	                $('.order-checkbox').prop('checked', isChecked);
+	            });
 	          
 	            function sendOrdNos(ordNos) {
 	                
@@ -342,17 +357,20 @@
 	                    url: '<%=request.getContextPath()%>/manage/delete', 
 	                    type: 'POST',
 	                    contentType: 'application/json; charset=utf-8',
-	                    data: JSON.stringify(ordNos),
+	                    data: JSON.stringify({ordNos}),
 	                    success: function(response) {
-	                        
+	                    	alert('刪除成功');
+	                    	$('.resultArea').empty();
+	                    	$('.overlay').hide();
 	                    },
 	                    error: function(xhr, status, error) {
-	                        
+	                    	alert('刪除失敗');
+	                    	$('.overlay').hide();
 	                    }
 	                });
 	            }
-	        });
-        }
+      		});
+       	}
         
     </script>
 	

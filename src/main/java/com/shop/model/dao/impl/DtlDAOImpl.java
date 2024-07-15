@@ -53,4 +53,10 @@ public class DtlDAOImpl implements DtlDAO {
 		}
 	}
 
+	@Override
+	public void delete(Dtl dtl) {
+		Session session = sessionFactory.getCurrentSession();
+		session.delete(dtl);
+	}
+
 }

@@ -75,9 +75,20 @@ public class ManageServiceImpl implements ManageService {
 	}
 
 	@Override
-	public int deleteOrd(int ordNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	@Transactional
+	public void deleteOrd(List<Integer> ordNos) {	
+		for (int ordNo : ordNos) {
+			Ord ord = ordDAO.findByOrdNo(ordNo);
+			List<Dtl> dtlList = dtlDAO.findByOrdNo(ordNo);
+			for(Dtl dtl : dtlList) {
+				Pro pro = dtl.getPro();
+				System.out.println(pro);
+				pro.setProQty(pro.getProQty() + dtl.getDtlQty());
+				proDAO.update(pro);
+				dtlDAO.delete(dtl);
+			}
+			ordDAO.delete(ord);
+		}
 	}
 
 	@Override

@@ -17,7 +17,7 @@ public interface ManageService {
 	
 	public List<Pro> getAddItems(int insertCount);
 	
-	public int deleteOrd(int ordNo);
+	public void deleteOrd(List<Integer> ordNos);
 	
 	public List<OrdDTO> getAllOrd(); 
  

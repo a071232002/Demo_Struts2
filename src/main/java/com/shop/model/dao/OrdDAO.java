@@ -15,4 +15,6 @@ public interface OrdDAO {
 	public Ord findByOrdNo(int ordNo);
 	
 	public int update(Ord ord);
+	
+	public void delete(Ord ord);
 }
