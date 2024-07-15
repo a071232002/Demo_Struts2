@@ -26,12 +26,18 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int register(User user) {
+		if (dao.findByMail(user.getUserMail()) != null) {
+			return -1;
+		}
 		return dao.insert(user);
 	}
 
 	@Override
-	public void update(User user) {
+	public User update(User user) {
 		dao.update(user);
+		User userNew = dao.findByUserNo(user.getUserNo());
+		System.out.println(userNew);
+		return userNew;
 	}
 
 	@Override

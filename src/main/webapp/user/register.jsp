@@ -10,6 +10,11 @@
 <h1>Register !</h1>
 	<%@ include file="/util/navi.jsp" %>
 	<main class="container">
+		<s:if test="#session.error != null">
+            <h4 class="error">
+                <s:property value="#session.error" />
+            </h4>
+        </s:if>
 		<s:form action="add" class="form">
 		
 		 <label> 請輸入帳號: </label><input type="text" name="userMail">

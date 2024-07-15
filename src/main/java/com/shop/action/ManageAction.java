@@ -62,6 +62,7 @@ public class ManageAction extends ActionSupport implements SessionAware {
 	}
 
 	public String importProByFileUpload() {
+		long startTime = System.currentTimeMillis();
 		List<Pro> proList = new ArrayList<Pro>();
 
 		try {
@@ -73,8 +74,11 @@ public class ManageAction extends ActionSupport implements SessionAware {
 			} else {
 				return "error";
 			}
-			System.out.println(insertCount);
-			System.out.println(newProList);
+			long endTime = System.currentTimeMillis();
+
+			long executionTime = endTime - startTime;
+			System.out.println("執行時間: " + executionTime + " milliseconds");
+
 			return "success";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,9 +88,7 @@ public class ManageAction extends ActionSupport implements SessionAware {
 
 	public String getOrderInfo() {
 		
-
 		if (!"".equals(this.ordNo) && this.ordNo != null) {
-			
 			this.ordDTOList = manageSvc.getOrdWithCondition(Integer.valueOf(ordNo));
 			return "success";
 		}

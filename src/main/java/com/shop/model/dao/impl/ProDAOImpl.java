@@ -48,12 +48,23 @@ public class ProDAOImpl implements ProDAO {
 	public int insertAll(List<Pro> proList) {
 		Session session = sessionFactory.getCurrentSession();
 		int insertCount = 0;
+		int batchSize = 20;
+	    
 		try {
 			
-			for (Pro pro : proList) {
-				session.save(pro);
-				insertCount++;
-			}
+//			for (Pro pro : proList) {
+//				session.save(pro);
+//				insertCount++;
+//			}
+			  for (int i = 0; i < proList.size(); i++) {
+		            session.save(proList.get(i));
+		            insertCount++;
+		            
+		            if (i > 0 && i % batchSize == 0) {
+		                session.flush();
+		                session.clear();
+		            }
+			  }
 			return insertCount;
 
 		} catch (Exception e) {

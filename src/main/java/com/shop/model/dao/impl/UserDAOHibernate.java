@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.shop.model.dao.UserDAO;
+import com.shop.model.entity.Pro;
 import com.shop.model.entity.User;
 
 @Component
@@ -54,7 +55,25 @@ public class UserDAOHibernate implements UserDAO {
 
 		return -1;
 	}
+	
+	@Override
+	public User findByUserNo(int userNo) {
+		Session session = sessionFactory.getCurrentSession();
+		session.clear();
+		try {
+			
+			 User user = session.get(User.class, userNo);
+			 System.out.println("這是DAO"+user);
+			 System.out.println("UserMail: " + user.getUserMail());
+			return user;
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
 	@Override
 	@Transactional
 	public User findByMail(String userMail) {
@@ -74,5 +93,7 @@ public class UserDAOHibernate implements UserDAO {
 		}
 
 	}
+
+
 
 }

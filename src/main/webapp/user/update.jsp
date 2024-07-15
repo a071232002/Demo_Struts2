@@ -17,8 +17,8 @@
 	     		<label>會員編號: <s:property value="#session.user.userNo" /></label>
 				<br>
 				<br>
-	    		<label>帳號:</label> 
-	    		<input type="text" name="userMail" value="<s:property value='#session.user.userMail' />">
+	    		<label>帳號: <s:property value="#session.user.userMail" /></label> 
+	    		
 				<br>
 				<br>
 				<label>名稱:</label>

@@ -8,6 +8,15 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/navi.css"> 
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/ordInfo.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/dataTable.css">
+<style>
+
+	.order {
+		margin-bottom: 20px;
+	}
+
+</style>
+
+
 </head>
 
 <body>

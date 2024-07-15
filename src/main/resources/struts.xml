@@ -13,6 +13,7 @@
 		
 		<action name="add" class="com.shop.action.UserAction" method="register">
 			<result name="success">welcome.jsp</result>
+			<result name="error" type="redirect">register.jsp</result>	
 		</action>
 		
 		<action name="login">

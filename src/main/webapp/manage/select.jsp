@@ -60,6 +60,30 @@
 		  font-weight: bold;
 		  text-align: center;
       }
+      
+	    .ordInfo {
+		    display: flex;
+		    align-items: center; 
+		    margin-bottom: 20px; 
+		}
+		
+		.ordInfo input,
+		.ordInfo div	{
+			vertical-align: middle
+		}
+		
+		.ordInfo div	{
+			width :auto;
+			flex: 1; 
+		}
+		
+	    .order-checkbox {
+		    width: 20px; 
+		    height: 20px; 
+		   	margin-right: 10px;
+		}
+
+      
 </style>
 
 </head>
@@ -206,7 +230,6 @@
             	$('.overlay').css('display', 'flex');
                 var ordNo = $('#ordNo').val().trim();
                 
-                
                 if (ordNo !== "" &&!/^\d+$/.test(ordNo)) {
                  alert('請輸入數字');
                  $('.overlay').hide();
@@ -226,6 +249,7 @@
                       
                         $('.resultArea').empty();
 				        var ordTableHtml = generateOrderTable(response.ordDTOList);
+				        bindDeleteOrderButton();
 				        $('.resultArea').append(ordTableHtml);
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
@@ -239,14 +263,21 @@
 
         function generateOrderTable(ords) {
 		    var ordTableHtml = '';
-		    ordTableHtml += `<p>訂單查詢結果如下</p> `;
+		    ordTableHtml += `
+			    			<p>訂單查詢結果如下</p>
+			    			<button id="deleteOrderBtn" class="delete-button">刪除</button>
+			    			`;
 			ords.forEach(ord => {
 				ordTableHtml += `
-					<div class="order" onclick="toggleDetails(this)">
-						<p>訂單編號: \${ord.ordNo}</p>
-						<p>訂購人編號: \${ord.userNo}</p>
-						<p>訂單金額: \${ord.ordPrice}</p>
-						<p>訂單狀態: \${ord.ordSt}</p>
+					<div class="ordInfo">
+						<input type="checkbox" class="order-checkbox" id="ord-\${ord.ordNo}" value="\${ord.ordNo}">
+					    
+						<div class="order" onclick="toggleDetails(this)">
+							<p>訂單編號: \${ord.ordNo}</p>
+							<p>訂購人編號: \${ord.userNo}</p>
+							<p>訂單金額: \${ord.ordPrice}</p>
+							<p>訂單狀態: \${ord.ordSt}</p>
+						</div>
 					</div>
 					<div class="dtl">
 				        <table class="dtlTable">
@@ -284,13 +315,49 @@
 
 
         function toggleDetails(element) {
-	        var dtlDiv = element.nextElementSibling;
-	        
+	        console.log(element.parentElement.nextElementSibling);
+	        var dtlDiv = element.parentElement.nextElementSibling;
 	        dtlDiv.style.display = (dtlDiv.style.display === 'none' || dtlDiv.style.display === '') ? 'block' : 'none';
 	        element.classList.toggle('picked');
 	    }
+
+
+        function bindDeleteOrderButton() {
+	        $(document).ready(function() {
+	
+	            $('#deleteOrderBtn').click(function() {
+	                var selectedOrders = [];
+	
+	                $('.order-checkbox:checked').each(function() {
+	                    selectedOrders.push($(this).val());
+	                });
+	
+	                sendSelectedOrders(selectedOrders);
+	            });
+	
+	          
+	            function sendSelectedOrders(selectedOrders) {
+	                
+	                $.ajax({
+	                    url: '<%=request.getContextPath()%>/manage/delete', 
+	                    type: 'POST',
+	                    contentType: 'application/json',
+	                    data: JSON.stringify(selectedOrders),
+	                    success: function(response) {
+	                        
+	                    },
+	                    error: function(xhr, status, error) {
+	                        
+	                    }
+	                });
+	            }
+	        });
+        }
         
     </script>
+	
+	
+	
 	
 	
 	

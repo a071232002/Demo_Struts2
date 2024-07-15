@@ -15,10 +15,10 @@ import org.springframework.stereotype.Component;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name ="userno", updatable = false)
+	@Column(name ="userNo", updatable = false)
 	private Integer userNo;
 	
-	@Column(name = "userMail")
+	@Column(name = "userMail", unique = true, updatable = false)
 	private String userMail;
 	
 	@Column(name = "userName")

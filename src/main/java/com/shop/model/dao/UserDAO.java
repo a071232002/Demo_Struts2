@@ -8,6 +8,8 @@ public interface UserDAO {
 
 	public int update(User user);
 	
+	public User findByUserNo(int userNo);
+	
 	public User findByMail(String userMail);
 	
 	

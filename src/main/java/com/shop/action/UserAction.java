@@ -21,26 +21,21 @@ public class UserAction extends ActionSupport implements SessionAware {
 	@Autowired
 	private UserService userSvc;
 
-//	public UserService getUserSvc() {
-//		return userSvc;
-//	}
-//
-//	@Resource(name = "userService")
-//	public void setUserSvc(UserService userSvc) {
-//		this.userSvc = userSvc;
-//	}
-
 	public String register() {
 		User user = new User();
 		user.setUserMail(userMail.toLowerCase().trim());
 		user.setUserName(userName.trim());
 		user.setUserPsw(userPsw.trim());
-
-		user.setUserNo(userSvc.register(user));
-
-//		DAO JDBC
-//		user.setUserNo(dao.add(user));
-
+		
+		int userID = userSvc.register(user);
+		if ( userID == -1 ) {
+			session.put("error", "帳號已使用");
+			return "error";
+		}
+		
+		session.remove("error");
+		user.setUserNo(userID);
+		
 		session.put("user", user);
 		return "success";
 	}
@@ -68,11 +63,11 @@ public class UserAction extends ActionSupport implements SessionAware {
 
 	public String update() {
 		User user = new User();
-		user.setUserMail(userMail.toLowerCase().trim());
+
 		user.setUserName(userName);
 		user.setUserPsw(userPsw);
 		user.setUserNo(((User) session.get("user")).getUserNo());
-		userSvc.update(user);
+		user = userSvc.update(user);
 		session.put("user", user);
 		return "success";
 	}
