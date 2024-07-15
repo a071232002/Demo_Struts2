@@ -130,5 +130,13 @@
             </result>
 		</action>
 		
+		<action name="delete" class="com.shop.action.ManageAction" method="deleteOrder">
+			<interceptor-ref name="json"></interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+			<result type="json" name="success">
+				<param name="ordNos">ordNos</param>
+			</result>
+		</action>
+		
 	</package>
 </struts>

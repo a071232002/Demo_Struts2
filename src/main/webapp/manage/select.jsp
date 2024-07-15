@@ -270,7 +270,7 @@
 			ords.forEach(ord => {
 				ordTableHtml += `
 					<div class="ordInfo">
-						<input type="checkbox" class="order-checkbox" id="ord-\${ord.ordNo}" value="\${ord.ordNo}">
+						<input type="checkbox" class="order-checkbox" id="ord-\${ord.ordNo}" name="ordNos" value="\${ord.ordNo}">
 					    
 						<div class="order" onclick="toggleDetails(this)">
 							<p>訂單編號: \${ord.ordNo}</p>
@@ -326,23 +326,23 @@
 	        $(document).ready(function() {
 	
 	            $('#deleteOrderBtn').click(function() {
-	                var selectedOrders = [];
+	                var ordNos = [];
 	
 	                $('.order-checkbox:checked').each(function() {
-	                    selectedOrders.push($(this).val());
+	                	ordNos.push($(this).val());
 	                });
-	
-	                sendSelectedOrders(selectedOrders);
+					console.log(ordNos);
+	                sendOrdNos(ordNos);
 	            });
 	
 	          
-	            function sendSelectedOrders(selectedOrders) {
+	            function sendOrdNos(ordNos) {
 	                
 	                $.ajax({
 	                    url: '<%=request.getContextPath()%>/manage/delete', 
 	                    type: 'POST',
-	                    contentType: 'application/json',
-	                    data: JSON.stringify(selectedOrders),
+	                    contentType: 'application/json; charset=utf-8',
+	                    data: JSON.stringify(ordNos),
 	                    success: function(response) {
 	                        
 	                    },
