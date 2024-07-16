@@ -95,9 +95,20 @@ public class CartAction extends ActionSupport implements SessionAware {
 		setCartList();
 		System.out.println(proNo);
 		System.out.println(proQty);
-		cartList.stream().filter(item -> item.getProNo().equals(proNo))
-        				 .findFirst()
-        				 .ifPresent(item -> item.setOrdQty(proQty));
+		
+		for (CartDTO cart : cartList) {
+			if (cart.getProNo().equals(proNo)) {
+				if (proQty > proSvc.findByProNo(proNo).getProQty()) {
+					return "error";
+				} else {
+					cart.setOrdQty(proQty);
+				}
+			}
+		}
+		
+//		cartList.stream().filter(item -> item.getProNo().equals(proNo))
+//        				 .findFirst()
+//        				 .ifPresent(item -> item.setOrdQty(proQty));
 		
 		System.out.println(cartList);
 		

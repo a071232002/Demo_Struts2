@@ -60,12 +60,29 @@
 		    font-weight: bold;
 		    text-decoration: underline;
 		}
+		
+		.overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 1000;
+          display: none;
+          justify-content: center;
+          align-items: center;
+          color: #fff;
+          font-size: 24px;
+          flex-direction: column;
+      }
 </style>
     
 </head>
 <body>
 	<h1>購物車</h1>
 	<%@ include file="/util/navi.jsp" %>
+		
 	<main>
     	<table  class="cartTable">
 	        <thead>
@@ -105,8 +122,11 @@
 	   		 <input type="submit" value="下單" class="submit-button">
 	    </form>
 	    </div>
+	    
 	</main>
-	
+	<div class="overlay" id="overlay">
+        處理中...
+    	</div>
     <!-- jQuery -->
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- DataTables JS -->
@@ -124,12 +144,13 @@
     function updateQuantity(proNo, change) {
         var currentQty = parseInt(document.getElementById('qty-' + proNo).innerText);
         var newQty = currentQty + change;
+        toggleOverlay();
         
         if (newQty < 1) {
+        	toggleOverlay();
             return;
         }
-
-        document.getElementById('qty-' + proNo).innerText = newQty;
+		
 
         fetch('<%=request.getContextPath()%>/cart/update', {
             method: 'POST',
@@ -146,15 +167,20 @@
             }
         })
         .then(data => {
-            console.log('Success:', data);
+            document.getElementById('qty-' + proNo).innerText = newQty;
         	document.getElementById('orderAmount').innerText = '總金額: ' + data.orderAmount;
+        	toggleOverlay();
         })
         .catch(error => {
-            console.error('Error:', error);
+        	alert('商品編號 ' + proNo + ' 庫存不足');
+        	toggleOverlay();
         });
     }
         
-    
+    function toggleOverlay() {
+        var overlayEl = document.getElementById('overlay');
+        overlayEl.style.display = (overlayEl.style.display === 'none' || overlayEl.style.display === '') ? 'flex' : 'none';
+    }
 </script>
 </body>
 
