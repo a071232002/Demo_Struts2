@@ -88,6 +88,9 @@ public class ManageAction extends ActionSupport implements SessionAware {
 	public String getOrderInfo() {
 		if (!"".equals(this.ordNo) && this.ordNo != null) {
 			this.ordDTOList = manageSvc.getOrdWithCondition(Integer.valueOf(ordNo));
+			if (ordDTOList.size() == 0) {
+				return "error";
+			}
 			return "success";
 		}
 		this.ordDTOList = manageSvc.getAllOrd();
@@ -95,7 +98,6 @@ public class ManageAction extends ActionSupport implements SessionAware {
 	}
 	
 	public String deleteOrder() {
-		System.out.println(ordNos);
 		try {
 			manageSvc.deleteOrd(ordNos);			
 			return "success";

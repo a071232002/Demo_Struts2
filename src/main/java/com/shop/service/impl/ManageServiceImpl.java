@@ -51,7 +51,6 @@ public class ManageServiceImpl implements ManageService {
 					ord.getOrdSt(),
 					dtlFormatToDTO(dtlDAO.findByOrdNo(ordNo)));
 			list.add(ordDTO);
-			System.out.println(list);
 		}
 		return list;
 	}
@@ -67,7 +66,6 @@ public class ManageServiceImpl implements ManageService {
 												  ord.getOrdSt(),
 												  dtlFormatToDTO(dtlDAO.findByOrdNo(ord.getOrdNo())));
 							}).collect(Collectors.toList());
-		System.out.println(list);
 		return list;
 	}
 
