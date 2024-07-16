@@ -17,11 +17,6 @@ public class UserDAOHibernate implements UserDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-//	@Resource(name = "sessionFactory")
-//	public void setSessionFactory(SessionFactory sessionFactory) {
-//		this.sessionFactory = sessionFactory;
-//	}
-
 	@Override
 	@Transactional
 	public int insert(User user) {
@@ -61,10 +56,7 @@ public class UserDAOHibernate implements UserDAO {
 		Session session = sessionFactory.getCurrentSession();
 		session.clear();
 		try {
-			
-			 User user = session.get(User.class, userNo);
-			 System.out.println("這是DAO"+user);
-			 System.out.println("UserMail: " + user.getUserMail());
+			User user = session.get(User.class, userNo);
 			return user;
 
 		} catch (Exception e) {
@@ -81,7 +73,7 @@ public class UserDAOHibernate implements UserDAO {
 		Session session = sessionFactory.getCurrentSession();
 
 		try {
-			
+
 			User user = (User) session.createQuery("from User where userMail =:userMail")
 							   		  .setParameter("userMail", userMail)
 							   		  .uniqueResult();

@@ -23,6 +23,7 @@
 	<h1>Order</h1>
 	<%@ include file="/util/navi.jsp" %>
 	<main>
+		<P>訂單查詢結果:</P>
     	<s:iterator value="ordList" var="ord">
     		<div class="order" onclick="toggleDetails(this)">
 	                <p>訂單編號: <s:property value="#ord.ordNo" /></p>

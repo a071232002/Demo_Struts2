@@ -21,7 +21,6 @@ public class DtlDAOImpl implements DtlDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-
 	@Override
 	public int insert(List<Dtl> dtlList) {
 		Session session = sessionFactory.getCurrentSession();

@@ -20,15 +20,6 @@ public class ProDAOImpl implements ProDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-//	public SessionFactory getSessionFactory() {
-//		return sessionFactory;
-//	}
-//
-//	@Resource(name = "sessionFactory")
-//	public void setSessionFactory(SessionFactory sessionFactory) {
-//		this.sessionFactory = sessionFactory;
-//	}
-
 	@Override
 	public int insert(Pro pro) {
 		Session session = sessionFactory.getCurrentSession();
@@ -122,7 +113,6 @@ public class ProDAOImpl implements ProDAO {
 		try {
 			session.update(pro);
 			return 1;
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;

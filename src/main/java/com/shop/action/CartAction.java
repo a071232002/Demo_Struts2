@@ -57,7 +57,7 @@ public class CartAction extends ActionSupport implements SessionAware {
 	}
 
 	public String add() {
-		System.out.println("=====================這是Action add=======================");
+		
 		setCartList();
 		if (cartList.size() != 0) {
 			for (CartDTO cartDTO : cartList) {
@@ -212,9 +212,9 @@ public class CartAction extends ActionSupport implements SessionAware {
 		setCartList();
 		if (cartList != null) {
 			dtlList = cartList.stream().map(item -> {
-				Pro pro = proSvc.findByProNo(item.getProNo());
-				return new Dtl(null, pro, item.getOrdQty(), item.getOrdPrice());
-			}).collect(Collectors.toList());
+											Pro pro = proSvc.findByProNo(item.getProNo());
+											return new Dtl(null, pro, item.getOrdQty(), item.getOrdPrice());
+							}).collect(Collectors.toList());
 		}
 		return dtlList;
 	}

@@ -16,7 +16,6 @@ import com.shop.service.ProService;
 public class ShopAction extends ActionSupport implements SessionAware {
 	
 	private List<Pro> proList;
-//	private List<ProDTO> proList;
 	private Integer proNo;
 	private String proName;
 	private Integer proPrice;
@@ -24,10 +23,8 @@ public class ShopAction extends ActionSupport implements SessionAware {
 	
 	private Map<String, Object> session;
 	
-	
 	@Autowired
 	private ProService proSvc;
-	
 	
 	@Override
 	public void setSession(Map<String, Object> session) {
@@ -40,8 +37,7 @@ public class ShopAction extends ActionSupport implements SessionAware {
 		if(user == null) {
 			return "returnLogin";
 		}
-		proList = proSvc.getAll();
-//		proList = proSvc.getDTOAll();	
+		proList = proSvc.getAll();	
 		System.out.println(proList);	
 		return "success";
 	}
@@ -52,9 +48,6 @@ public class ShopAction extends ActionSupport implements SessionAware {
 		this.proList = proList;
 	}
 
-//	public void setProList(List<ProDTO> proList) {
-//		this.proList = proList;
-//	}
 	
 	public List<Pro> getProList() {
 		return proList;

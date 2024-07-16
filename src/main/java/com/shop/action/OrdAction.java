@@ -38,22 +38,12 @@ public class OrdAction extends ActionSupport implements SessionAware {
 			return "returnLogin";
 		}
 		ordList = ordSvc.findByUser(user);
-		System.out.println(ordList);
 		
 		for (Ord ord : ordList) {
 			int ordNo = ord.getOrdNo();
 			List<Dtl> dtlList =  dtlSvc.findByOrdNo(ordNo);
 			dtlMap.put(String.valueOf(ordNo) , dtlList);
 		}
-		
-//		dtlList = ordList.stream()
-//			    .map(ord -> {
-//			        Dtl dtl = new Dtl();
-//			        dtl = (Dtl) dtlSvc.findByOrdNo(ord.getOrdNo());
-//			        return dtl;
-//			    })
-//			    .filter(Objects::nonNull) 
-//			    .collect(Collectors.toList());
 		
 		System.out.println(dtlMap);
 		return "success";

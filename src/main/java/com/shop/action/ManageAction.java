@@ -33,15 +33,14 @@ public class ManageAction extends ActionSupport implements SessionAware {
 //	訂單查詢
 	private String ordNo;
 	private List<OrdDTO> ordDTOList;
-
+	
+//	checkbox操作
 	private List<Integer> ordNos;
-
 
 	Map<String, Object> session;
 
 	@Autowired
 	ManageService manageSvc;
-	
 
 	@Override
 	public void setSession(Map<String, Object> session) {
