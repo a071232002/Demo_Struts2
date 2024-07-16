@@ -18,7 +18,7 @@ import com.shop.model.dto.OrdDTO;
 import com.shop.model.entity.Pro;
 import com.shop.service.ManageService;
 
-@Component
+@Component("ManageAction")
 public class ManageAction extends ActionSupport implements SessionAware {
 
 //	範本下載

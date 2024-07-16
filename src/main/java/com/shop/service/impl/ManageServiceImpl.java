@@ -44,13 +44,15 @@ public class ManageServiceImpl implements ManageService {
 	public List<OrdDTO> getOrdWithCondition(int ordNo) {
 		List<OrdDTO> list = new ArrayList<OrdDTO>();
 		Ord ord = ordDAO.findByOrdNo(ordNo);
-		OrdDTO ordDTO = new OrdDTO ( ord.getOrdNo(),
-							 		 ord.getUser().getUserNo(),
-							 		 ord.getOrdPrice(),
-							 		 ord.getOrdSt(),
-							 		 dtlFormatToDTO(dtlDAO.findByOrdNo(ordNo)));
-		list.add(ordDTO);
-		System.out.println(list);
+		if (ord != null) {
+			OrdDTO ordDTO = new OrdDTO ( ord.getOrdNo(),
+					ord.getUser().getUserNo(),
+					ord.getOrdPrice(),
+					ord.getOrdSt(),
+					dtlFormatToDTO(dtlDAO.findByOrdNo(ordNo)));
+			list.add(ordDTO);
+			System.out.println(list);
+		}
 		return list;
 	}
 	
