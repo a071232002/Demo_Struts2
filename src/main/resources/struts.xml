@@ -107,7 +107,7 @@
 			<result>/manage/select.jsp</result>
 		</action>
 		
-		<action name="downloadSpec" class="ManageAction" method="downloadSpec">
+		<action name="downloadSpec" class="Manage" method="downloadSpec">
 			<result name="success" type="stream">
 	            <param name="contentType">application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</param>
 	            <param name="inputName">inputStream</param>
@@ -116,21 +116,21 @@
 	        </result>
 		</action>
 		
-		<action name="proUpload" class="ManageAction" method="importProByFileUpload">
+		<action name="proUpload" class="Manage" method="importProByFileUpload">
 			<result name="success" type="json">
                 <param name="insertCount">insertCount</param>
                 <param name="newProList">newProList</param>
             </result>
 		</action>
 		
-		<action name="getOrderInfo" class="ManageAction" method="getOrderInfo">
+		<action name="getOrderInfo" class="Manage" method="getOrderInfo">
 			<interceptor-ref name="jsonStack"/>
 			<result type="json" name="success">
             	<param name="ordDTOList">ordDTOList</param>
             </result>
 		</action>
 		
-		<action name="delete" class="ManageAction" method="deleteOrder">
+		<action name="delete" class="Manage" method="deleteOrder">
 			<interceptor-ref name="json"></interceptor-ref>
             <interceptor-ref name="defaultStack"></interceptor-ref>
 			<result type="json" name="success">
