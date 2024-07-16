@@ -274,7 +274,7 @@
 		    ordTableHtml += `
 			    			<p>訂單查詢結果如下</p>
 			    			<div class="ordInfo" style="margin-bottom:10px;">
-			    			<input type="checkbox" class=".checkAll" id="checkAll" name="checkAll"><p style="margin-right:20px;">全選</p>
+			    			<input type="checkbox" class="checkAll" id="checkAll" name="checkAll"><p style="margin-right:20px;">全選</p>
 			    			<button id="deleteOrderBtn" class="delete-button">刪除</button>
 			    			</div>
 			    			`;
