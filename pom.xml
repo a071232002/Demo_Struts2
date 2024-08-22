@@ -14,6 +14,13 @@
 		<struts2.version>2.3.20</struts2.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<repositories>
+	    <repository>
+	        <id>com.e-iceblue</id>
+	        <name>e-iceblue</name>
+	        <url>https://repo.e-iceblue.com/nexus/content/groups/public/</url>
+	    </repository>
+	</repositories>
 
 
 	<dependencies>
@@ -113,6 +120,60 @@
 			<version>3.1.0</version> <!-- 根据你的项目需要的 Servlet 版本进行调整 -->
 			<scope>provided</scope> <!-- Servlet 容器通常会提供 Servlet API，因此 scope
 			可以设置为 provided -->
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>5.2.3</version> <!-- 使用最新版本 -->
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>5.2.3</version> <!-- 使用最新版本 -->
+		</dependency>
+		<dependency>
+	        <groupId>commons-io</groupId>
+	        <artifactId>commons-io</artifactId>
+	        <version>2.11.0</version> <!-- 使用最新版本 -->
+	    </dependency>
+		    <dependency>
+	        <groupId>e-iceblue</groupId>
+	        <artifactId>spire.xls</artifactId>
+	        <version>14.7.7</version>
+	    </dependency>
+		<!-- https://mvnrepository.com/artifact/org.odftoolkit/odftoolkit -->
+		<dependency>
+		    <groupId>org.odftoolkit</groupId>
+		    <artifactId>odftoolkit</artifactId>
+		    <version>0.9.0</version>
+		    <type>pom</type>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.odftoolkit/simple-odf -->
+		<dependency>
+		    <groupId>org.odftoolkit</groupId>
+		    <artifactId>simple-odf</artifactId>
+		    <version>0.9.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl -->
+		<dependency>
+		    <groupId>net.sourceforge.jexcelapi</groupId>
+		    <artifactId>jxl</artifactId>
+		    <version>2.6.12</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.jodconverter/jodconverter-core -->
+		<dependency>
+		    <groupId>org.jodconverter</groupId>
+		    <artifactId>jodconverter-core</artifactId>
+		    <version>4.4.7</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.jodconverter</groupId>
+		    <artifactId>jodconverter-local</artifactId>
+		    <version>4.4.7</version>
 		</dependency>
 
 	</dependencies>

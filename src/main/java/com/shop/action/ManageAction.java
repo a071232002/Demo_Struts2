@@ -4,19 +4,37 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.ss.formula.functions.Counta;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
+import org.odftoolkit.odfdom.type.Color;
+import org.odftoolkit.simple.SpreadsheetDocument;
+import org.odftoolkit.simple.style.Font;
+import org.odftoolkit.simple.style.StyleTypeDefinitions.FontStyle;
+import org.odftoolkit.simple.style.StyleTypeDefinitions.HorizontalAlignmentType;
+import org.odftoolkit.simple.table.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.shop.model.dto.OdsTestDTO;
 import com.shop.model.dto.OrdDTO;
 import com.shop.model.entity.Pro;
 import com.shop.service.ManageService;
+import com.shop.util.bean.DataCell;
+import com.shop.util.bean.MergeCell;
+import com.shop.util.bean.OdsEl;
+import com.shop.util.bean.OdsStyle;
+import com.shop.util.bean.TittleCell;
+
 
 @Component("Manage")
 public class ManageAction extends ActionSupport implements SessionAware {
@@ -37,8 +55,13 @@ public class ManageAction extends ActionSupport implements SessionAware {
 //	checkbox操作
 	private List<Integer> ordNos;
 
+	
+	
 	Map<String, Object> session;
-
+	
+	
+	
+	
 	@Autowired
 	ManageService manageSvc;
 
@@ -107,6 +130,128 @@ public class ManageAction extends ActionSupport implements SessionAware {
 		}
 	}
 	
+	public String printData() {
+		
+		List<OdsTestDTO> resultList = new ArrayList<OdsTestDTO>();
+		
+		resultList.add(new OdsTestDTO("20240822", "MT956", 1, 2, 3, 6));
+		resultList.add(new OdsTestDTO("20240822", "MT888", 3, 1, 2, 6));
+		resultList.add(new OdsTestDTO("20240823", "MT956", 10, 15, 0, 25));
+		resultList.add(new OdsTestDTO("20240824", "MT956", 3, 17, 1, 21));
+		resultList.add(new OdsTestDTO("20240824", "MT888", 2, 11, 1, 14));
+		resultList.add(new OdsTestDTO("20240824", "MT975", 5, 30, 1, 36));
+		resultList.add(new OdsTestDTO("20240824", "MT777", 0, 0, 1, 1));
+		resultList.add(new OdsTestDTO("20240825", "MT777", 11, 10, 11, 32));
+			
+        try {
+			new InnerOdsUtil().exportOds(resultList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return null;
+    }
+	
+	class InnerOdsUtil{
+		
+		OdsStyle centerFormat, rightFormat;
+		
+		public InnerOdsUtil() {
+			Font font = new Font("Times New Roman", FontStyle.REGULAR, 12.0d, Color.BLACK); 
+			centerFormat = new OdsStyle(font, HorizontalAlignmentType.CENTER);
+			rightFormat = new OdsStyle(font, HorizontalAlignmentType.RIGHT);
+		}
+		
+		public void exportOds(List<OdsTestDTO> resultList) throws Exception {
+			HttpServletResponse response = (HttpServletResponse) ServletActionContext.getResponse();
+	        response.setContentType("application/vnd.oasis.opendocument.spreadsheet");
+	        response.setHeader("Content-Disposition", "attachment; filename=\"data.ods\"");
+	        
+	        SpreadsheetDocument ods = SpreadsheetDocument.newSpreadsheetDocument();
+			if (ods != null) {
+				// 建立工作表(SpreadsheetDocument 創建時已有預設的sheet1)
+				Table table = ods.getSheetByName("Sheet1");
+		        List<OdsEl> cells = new ArrayList<OdsEl>();
+		        int rowNum = 0;
+		        cells.add(new MergeCell(0, rowNum, 5, rowNum, "Test ODF.ods export", centerFormat));
+		        rowNum++;
+		        cells.add(new MergeCell(0, rowNum, 5, rowNum, "列印日期：" + LocalDateTime.now().toString(), centerFormat));
+		        rowNum++;
+		        cells.add(new TittleCell(0, rowNum, "日期", 30, centerFormat));
+		        cells.add(new TittleCell(1, rowNum, "flightNo", 30, centerFormat));
+		        cells.add(new TittleCell(2, rowNum, "typeA", 15, centerFormat));
+		        cells.add(new TittleCell(3, rowNum, "typeB", 15, centerFormat));
+		        cells.add(new TittleCell(4, rowNum, "typeC", 15, centerFormat));
+		        cells.add(new TittleCell(5, rowNum, "總計", 15, centerFormat));
+		        
+		        int countA = 0;
+		        int countB = 0;
+		        int countC = 0;
+		        int sum = 0;
+		        String temp = "";
+		        
+		        for ( int i = 0; i < resultList.size(); i++ ) {
+		        	if (i == 0 || temp.equals(resultList.get(i).getDate())) {
+		        		temp = resultList.get(i).getDate();
+		        		rowNum++;
+		        		cells.add(new DataCell(0, rowNum, resultList.get(i).getDate(), centerFormat));		        	
+		        		cells.add(new DataCell(1, rowNum, resultList.get(i).getFlightNo(), centerFormat));		        	
+		        		cells.add(new DataCell(2, rowNum, resultList.get(i).getTypeA(), rightFormat));		        	
+		        		cells.add(new DataCell(3, rowNum, resultList.get(i).getTypeB(), rightFormat));		        	
+		        		cells.add(new DataCell(4, rowNum, resultList.get(i).getTypeC(), rightFormat));		        	
+		        		cells.add(new DataCell(5, rowNum, resultList.get(i).getTotal(), rightFormat));
+		        		
+		        		countA += resultList.get(i).getTypeA();
+		        		countB += resultList.get(i).getTypeB();
+		        		countC += resultList.get(i).getTypeC();
+		        		sum += resultList.get(i).getTotal();
+		        		
+		        	} else {
+	        			temp = resultList.get(i).getDate();		        			
+
+		        		rowNum++;
+		        		cells.add(new MergeCell(0, rowNum, 1, rowNum, "總計", centerFormat));
+		        		cells.add(new DataCell(2, rowNum, countA, rightFormat));		        	
+		        		cells.add(new DataCell(3, rowNum, countB, rightFormat));		        	
+		        		cells.add(new DataCell(4, rowNum, countC, rightFormat));		        	
+		        		cells.add(new DataCell(5, rowNum, sum, rightFormat));
+		        		
+		        		countA = 0;
+		        		countB = 0;
+		        		countC = 0;
+		        		sum = 0;
+		        		
+		        		rowNum++;
+		        		cells.add(new DataCell(0, rowNum, resultList.get(i).getDate(), centerFormat));		        	
+		        		cells.add(new DataCell(1, rowNum, resultList.get(i).getFlightNo(), centerFormat));		        	
+		        		cells.add(new DataCell(2, rowNum, resultList.get(i).getTypeA(), rightFormat));		        	
+		        		cells.add(new DataCell(3, rowNum, resultList.get(i).getTypeB(), rightFormat));		        	
+		        		cells.add(new DataCell(4, rowNum, resultList.get(i).getTypeC(), rightFormat));		        	
+		        		cells.add(new DataCell(5, rowNum, resultList.get(i).getTotal(), rightFormat));
+		        		
+		        		countA += resultList.get(i).getTypeA();
+		        		countB += resultList.get(i).getTypeB();
+		        		countC += resultList.get(i).getTypeC();
+		        		sum += resultList.get(i).getTotal();
+		        	}
+		        }
+		        
+		        rowNum++;
+        		cells.add(new MergeCell(0, rowNum, 1, rowNum, "總計", centerFormat));
+        		cells.add(new DataCell(2, rowNum, countA, rightFormat));		        	
+        		cells.add(new DataCell(3, rowNum, countB, rightFormat));		        	
+        		cells.add(new DataCell(4, rowNum, countC, rightFormat));		        	
+        		cells.add(new DataCell(5, rowNum, sum, rightFormat));
+		        
+		        for (OdsEl c : cells) {
+		        	c.write(table);
+		        }
+			}
+	        OutputStream out = response.getOutputStream();
+	        ods.save(out);
+	        ods.close();
+		}
+	}
 	
 	public InputStream getInputStream() {
 		return inputStream;
@@ -171,5 +316,5 @@ public class ManageAction extends ActionSupport implements SessionAware {
 	public void setOrdDTOList(List<OrdDTO> ordDTOList) {
 		this.ordDTOList = ordDTOList;
 	}
-
+	
 }

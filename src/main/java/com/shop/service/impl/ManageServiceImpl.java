@@ -128,7 +128,7 @@ public class ManageServiceImpl implements ManageService {
 
 	@Override
 	public int printOrdInfo(int ordNo) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 	

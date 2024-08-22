@@ -138,5 +138,12 @@
 			</result>
 		</action>
 		
+		<action name="printData" class="Manage" method="printData">
+		   	<result type="stream">
+		   		<param name="contentType">application/vnd.oasis.opendocument.spreadsheet</param>
+                <param name="contentDisposition">attachment;filename="data.ods"</param>
+                <param name="inputName">inputStream</param>
+        	</result>
+		</action>
 	</package>
 </struts>
