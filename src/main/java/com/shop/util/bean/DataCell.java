@@ -42,8 +42,8 @@ public class DataCell implements OdsEl {
 	@Override
 	public void setStyle(Cell cell) {
 		cell.getStyleHandler().setBackgroundColor(odsStyle.getBackgroundColor());
-		cell.getStyleHandler().setFont(odsStyle.getFont(), Locale.getDefault());
 		cell.getStyleHandler().setFont(odsStyle.getFont());
+		cell.getStyleHandler().setFont(odsStyle.getFont(), Locale.getDefault());
 		
 		cell.getStyleHandler().setHorizontalAlignment(odsStyle.getHorizontalAlignmentType());
 		if (odsStyle.getVerticalAlignmentType() != null) {

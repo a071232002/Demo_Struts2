@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +36,8 @@ import com.shop.util.bean.MergeCell;
 import com.shop.util.bean.OdsEl;
 import com.shop.util.bean.OdsStyle;
 import com.shop.util.bean.TittleCell;
+
+import jxl.write.DateFormat;
 
 
 @Component("Manage")
@@ -172,10 +176,11 @@ public class ManageAction extends ActionSupport implements SessionAware {
 				// 建立工作表(SpreadsheetDocument 創建時已有預設的sheet1)
 				Table table = ods.getSheetByName("Sheet1");
 		        List<OdsEl> cells = new ArrayList<OdsEl>();
+		        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/mm/dd hh:mm:ss");
 		        int rowNum = 0;
 		        cells.add(new MergeCell(0, rowNum, 5, rowNum, "Test ODF.ods export", centerFormat));
 		        rowNum++;
-		        cells.add(new MergeCell(0, rowNum, 5, rowNum, "列印日期：" + LocalDateTime.now().toString(), centerFormat));
+		        cells.add(new MergeCell(0, rowNum, 5, rowNum, "列印日期：" + LocalDateTime.now().format(format), centerFormat));
 		        rowNum++;
 		        cells.add(new TittleCell(0, rowNum, "日期", 30, centerFormat));
 		        cells.add(new TittleCell(1, rowNum, "flightNo", 30, centerFormat));
@@ -193,14 +198,10 @@ public class ManageAction extends ActionSupport implements SessionAware {
 		        for ( int i = 0; i < resultList.size(); i++ ) {
 		        	if (i == 0 || temp.equals(resultList.get(i).getDate())) {
 		        		temp = resultList.get(i).getDate();
-		        		rowNum++;
-		        		cells.add(new DataCell(0, rowNum, resultList.get(i).getDate(), centerFormat));		        	
-		        		cells.add(new DataCell(1, rowNum, resultList.get(i).getFlightNo(), centerFormat));		        	
-		        		cells.add(new DataCell(2, rowNum, resultList.get(i).getTypeA(), rightFormat));		        	
-		        		cells.add(new DataCell(3, rowNum, resultList.get(i).getTypeB(), rightFormat));		        	
-		        		cells.add(new DataCell(4, rowNum, resultList.get(i).getTypeC(), rightFormat));		        	
-		        		cells.add(new DataCell(5, rowNum, resultList.get(i).getTotal(), rightFormat));
 		        		
+		        		rowNum++;
+		        		inputData(cells, rowNum, resultList, i);
+
 		        		countA += resultList.get(i).getTypeA();
 		        		countB += resultList.get(i).getTypeB();
 		        		countC += resultList.get(i).getTypeC();
@@ -222,13 +223,8 @@ public class ManageAction extends ActionSupport implements SessionAware {
 		        		sum = 0;
 		        		
 		        		rowNum++;
-		        		cells.add(new DataCell(0, rowNum, resultList.get(i).getDate(), centerFormat));		        	
-		        		cells.add(new DataCell(1, rowNum, resultList.get(i).getFlightNo(), centerFormat));		        	
-		        		cells.add(new DataCell(2, rowNum, resultList.get(i).getTypeA(), rightFormat));		        	
-		        		cells.add(new DataCell(3, rowNum, resultList.get(i).getTypeB(), rightFormat));		        	
-		        		cells.add(new DataCell(4, rowNum, resultList.get(i).getTypeC(), rightFormat));		        	
-		        		cells.add(new DataCell(5, rowNum, resultList.get(i).getTotal(), rightFormat));
-		        		
+		        		inputData(cells, rowNum, resultList, i);
+
 		        		countA += resultList.get(i).getTypeA();
 		        		countB += resultList.get(i).getTypeB();
 		        		countC += resultList.get(i).getTypeC();
@@ -250,6 +246,15 @@ public class ManageAction extends ActionSupport implements SessionAware {
 	        OutputStream out = response.getOutputStream();
 	        ods.save(out);
 	        ods.close();
+		}
+		
+		private void inputData(List<OdsEl> cells, int rowNum, List<OdsTestDTO> resultList, int index) {
+    		cells.add(new DataCell(0, rowNum, resultList.get(index).getDate(), centerFormat));		        	
+    		cells.add(new DataCell(1, rowNum, resultList.get(index).getFlightNo(), centerFormat));		        	
+    		cells.add(new DataCell(2, rowNum, resultList.get(index).getTypeA(), rightFormat));		        	
+    		cells.add(new DataCell(3, rowNum, resultList.get(index).getTypeB(), rightFormat));		        	
+    		cells.add(new DataCell(4, rowNum, resultList.get(index).getTypeC(), rightFormat));		        	
+    		cells.add(new DataCell(5, rowNum, resultList.get(index).getTotal(), rightFormat));
 		}
 	}
 	
